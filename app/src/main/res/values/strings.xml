@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">AndroidAdvanced</string>
+    <string name="login">Login</string>
+    <string name="user_email">User Email</string>
+    <string name="password">Password</string>
+    <string name="dragon_ballz">Dragon Ballz</string>
+    <string name="hero_name">Hero Name</string>
+    <string name="heroes_title">Heroes</string>
+    <string name="take_damage">Take Damage</string>
+    <string name="fight">Fight</string>
+    <string name="heal">Heal</string>
+    <string name="life">Life</string>
+    <string name="choose_a_hero">Choose a Hero</string>
+    <string name="dragon_ballz_fight">Dragon Ballz Fight!</string>
+    <string name="life_readout">Life 100%</string>
+    <string name="herofightimage">HeroFightImage</string>
+    <string name="damagetint">DamageTint</string>
+    <string name="ouch">Ouch!</string>
 </resources>
