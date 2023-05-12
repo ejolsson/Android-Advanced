@@ -53,6 +53,12 @@
                     tools:srcCompat="@tools:sample/avatars[0]" />
             </com.google.android.material.card.MaterialCardView>
 
+            <Button
+                android:id="@+id/bMakeFavorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Favorite" />
+
             <TextView
                 android:id="@+id/tvHeroDescription"
                 android:layout_width="match_parent"
