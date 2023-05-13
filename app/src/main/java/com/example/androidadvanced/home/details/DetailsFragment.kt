@@ -29,7 +29,7 @@ class DetailsFragment(private val hero: Hero) : Fragment() {
     ): View {
         binding = DetailsBinding.inflate(inflater)
         binding.tvHeroDetailTitle.text = hero.name
-//        binding.ivDamageAnimation.alpha = damageTint
+        binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
         Log.w("Tag FightFrag", "FightFrag > onCreateView ********")
         setObservers()
@@ -44,16 +44,6 @@ class DetailsFragment(private val hero: Hero) : Fragment() {
         Log.w("Tag FightFrag", "${hero.name} life: ${hero.currentLife}")
 
         makeFavoriteButton?.setOnClickListener {
-
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name}")
-
-            hero.currentLife = viewModel.takeDamage(hero.currentLife)
-
-//            binding.lifeBarLabel.text = "Life ${hero.currentLife}"
-//            binding.lifebar.setProgress(hero.currentLife,true)
-//            binding.ivDamageAnimation.alpha = 0.4F
-//            binding.ouch.alpha = 1.0F
-
             Log.w("Tag FightFrag", "FightFrag > ${hero.name}")
             if (hero.currentLife <= 0)  {
                 Log.w("Tag FightFrag", "Life <= 0")

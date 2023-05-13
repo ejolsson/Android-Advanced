@@ -42,8 +42,20 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.7' // L5, 0.37.00 needed for .. by viewModels
+
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'androidx.core:core-ktx:1.10.1'
+
+    // networking
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
+//    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
+
+    // testing
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.2.1")
+    testImplementation("com.google.truth:truth:1.0") //Alternativa: HAMCREST
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

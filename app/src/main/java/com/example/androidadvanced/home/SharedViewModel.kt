@@ -1,21 +1,24 @@
 package com.example.androidadvanced.home
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.androidfundamentals.data.Hero
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidadvanced.data.Repository
+import com.example.androidadvanced.data.remote.response.GetHeroesResponse
 import com.example.androidfundamentals.data.HeroDTO
-//import com.example.androidfundamentals.home.fight.DetailsFragment
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.lang.Exception
-import kotlin.random.Random
 
 class SharedViewModel: ViewModel() {
 
@@ -25,7 +28,22 @@ class SharedViewModel: ViewModel() {
     val heroState: StateFlow<HeroState> = _heroState
     lateinit var heroesLiving: List<Hero>
     var selectedHero: Hero? = null
-//    lateinit var fightFragment: DetailsFragment
+
+    private val repository = Repository()
+    private val _heroes = MutableLiveData<List<GetHeroesResponse>>()
+    val heroes: LiveData<List<GetHeroesResponse>> get() = _heroes
+
+    // advanced call
+    fun getHeroes() {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                repository.getHeroes()
+            }
+            _heroes.value = result
+            Log.d("Tag getHeroes", _heroes.toString())
+            Log.d("Tag getHeroes", "$result") // prints right result
+        }
+    }
 
     fun fetchHeroes(token: String) {
         Log.w("Tag", "fetchHeroes...")
@@ -51,7 +69,7 @@ class SharedViewModel: ViewModel() {
                         val response = responseBody.string()
                         val heroDtoArray = gson.fromJson(response, Array<HeroDTO>::class.java)
                         Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}")
-                        val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo) } // map API data to local model for simulation
+                        val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo, it.description) } // map API data to local model for simulation
                         Log.w("Tag", "heroesFight = $heroesFight")
                         heroesLiving = heroesFight // initialize living heroes with api data
                         Log.w("Tag", "heroesLiving = $heroesLiving")
@@ -82,23 +100,6 @@ class SharedViewModel: ViewModel() {
                 _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
             }
         }
-    }
-
-    private var damageLevels = 6
-
-    fun generateRandomNumber(levels: Int): Int {
-        return Random.nextInt(1, levels)
-    }
-
-    fun takeDamage(lifeBefore: Int):Int {
-        val damage = generateRandomNumber(damageLevels)
-        val lifeAfter = lifeBefore - 10 * damage
-//        Log.w("Tag", "Damage = -${damage}0, life = $lifeAfter")
-        return lifeAfter
-    }
-
-    fun heal(lifeBefore: Int): Int {
-        return lifeBefore + 20
     }
 
     sealed class HeroListState {
