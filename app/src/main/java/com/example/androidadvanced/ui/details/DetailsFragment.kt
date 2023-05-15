@@ -13,11 +13,12 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.DetailsBinding
 import com.example.androidadvanced.ui.home.SharedViewModel
-import com.example.androidfundamentals.data.Hero
+import com.example.androidadvanced.data.Hero
+import com.example.androidadvanced.data.remote.response.GetHeroesResponse
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
-class DetailsFragment(private val hero: Hero) : Fragment() {
+class DetailsFragment(private val hero: GetHeroesResponse) : Fragment() { // was Hero
 
     private lateinit var binding: DetailsBinding
     private val viewModel: SharedViewModel by activityViewModels()

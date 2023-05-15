@@ -14,7 +14,8 @@ import com.example.androidadvanced.databinding.HeroListFragmentBinding
 import com.example.androidadvanced.ui.home.HeroActivity
 import com.example.androidadvanced.ui.home.SharedViewModel
 import com.example.androidadvanced.ui.details.DetailsFragment
-import com.example.androidfundamentals.data.Hero
+import com.example.androidadvanced.data.Hero
+import com.example.androidadvanced.data.remote.response.GetHeroesResponse
 import kotlinx.coroutines.launch
 
 class HeroListFragment(): Fragment(), HeroClicked {
@@ -46,7 +47,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
 //                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}")
 //                        it.heroes[0].currentLife = 0 // this removes Broly by forcing her currentLife to 0
 //                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
-                        adapter = HeroCellAdapter(it.heroes, this@HeroListFragment) // removed life filter
+                        adapter = HeroCellAdapter(it.heroes2, this@HeroListFragment) // removed life filter, toggle heroes & heroes2
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                     }
@@ -75,7 +76,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
         }
     }
 
-    override fun heroSelectionClicked(hero: Hero) {
+    override fun heroSelectionClicked(hero: GetHeroesResponse) { // was Hero
         viewModel.selectHero(hero)
     }
 }

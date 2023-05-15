@@ -19,6 +19,7 @@ class LoginViewModel : ViewModel() {
 
     fun userLogin(email: String, password: String) {
     Log.w("Tag LoginVM","fun userLogin started...")
+        // TODO: Refactor to use retrofit
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/"

@@ -35,8 +35,8 @@ class HeroActivity : AppCompatActivity() {
             .replace(heroActivityBinding.fFragment.id, HeroListFragment())
             .commitNow()
         intent.extras?.getString(TAG_TOKEN, "")?.let { token ->
-            sharedViewModel.fetchHeroes(token)
-//            sharedViewModel.getHeroes() // hero list blank
+//            sharedViewModel.fetchHeroes(token) // v1 API call
+            sharedViewModel.getHeroes() // v2 API call, hero list now rendering
         }
     }
 }

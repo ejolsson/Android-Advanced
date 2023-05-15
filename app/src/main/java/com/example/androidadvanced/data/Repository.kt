@@ -1,7 +1,7 @@
 package com.example.androidadvanced.data
 
 import com.example.androidadvanced.data.remote.response.GetHeroesResponse
-import com.keepcoding.androidavanzado.data.remote.RemoteDataSource
+import com.example.androidadvanced.data.remote.RemoteDataSource
 
 class Repository {
 
@@ -9,5 +9,5 @@ class Repository {
 
     suspend fun getHeroes(): List<GetHeroesResponse> {
         return remoteDataSource.getHeroes()
-    }
+    } // called in SharedVM
 }
