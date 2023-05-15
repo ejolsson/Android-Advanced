@@ -1,4 +1,4 @@
-package com.example.androidadvanced.home
+package com.example.androidadvanced.ui.home
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -75,12 +75,16 @@ class SharedViewModel: ViewModel() {
                         Log.w("Tag SharedVM", "heroesLiving = $heroesLiving")
                         _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
                     } catch (ex: Exception) {
-                        _heroListState.value= HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
+                        _heroListState.value=
+                            HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
                     }
-                } ?: run { _heroListState.value = HeroListState.ErrorResponse("Something went wrong in the fetchHeroes request") }
+                } ?: run { _heroListState.value =
+                    HeroListState.ErrorResponse("Something went wrong in the fetchHeroes request")
+                }
             }
             else {
-                _heroListState.value = HeroListState.ErrorResponse("Something went wrong in the fetchHeroes response")
+                _heroListState.value =
+                    HeroListState.ErrorResponse("Something went wrong in the fetchHeroes response")
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.androidadvanced.home.herolist
+package com.example.androidadvanced.ui.home.herolist
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.HeroListFragmentBinding
-import com.example.androidadvanced.home.HeroActivity
-import com.example.androidadvanced.home.SharedViewModel
-import com.example.androidadvanced.home.details.DetailsFragment
+import com.example.androidadvanced.ui.home.HeroActivity
+import com.example.androidadvanced.ui.home.SharedViewModel
+import com.example.androidadvanced.ui.details.DetailsFragment
 import com.example.androidfundamentals.data.Hero
 import kotlinx.coroutines.launch
 

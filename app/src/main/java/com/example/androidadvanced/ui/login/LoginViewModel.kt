@@ -1,4 +1,4 @@
-package com.example.androidadvanced.login
+package com.example.androidadvanced.ui.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

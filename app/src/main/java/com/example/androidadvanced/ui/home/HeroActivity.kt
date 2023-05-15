@@ -1,4 +1,4 @@
-package com.example.androidadvanced.home
+package com.example.androidadvanced.ui.home
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.databinding.HeroActivityBinding
-import com.example.androidadvanced.home.herolist.HeroListFragment
+import com.example.androidadvanced.ui.home.herolist.HeroListFragment
 
 class HeroActivity : AppCompatActivity() {
 

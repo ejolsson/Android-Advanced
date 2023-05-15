@@ -1,4 +1,4 @@
-package com.example.androidadvanced.home.herolist
+package com.example.androidadvanced.ui.home.herolist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

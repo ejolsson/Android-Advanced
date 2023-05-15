@@ -1,4 +1,4 @@
-package com.example.androidadvanced.home.details
+package com.example.androidadvanced.ui.details
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.DetailsBinding
-import com.example.androidadvanced.home.SharedViewModel
+import com.example.androidadvanced.ui.home.SharedViewModel
 import com.example.androidfundamentals.data.Hero
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch

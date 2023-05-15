@@ -1,4 +1,4 @@
-package com.example.androidadvanced.login
+package com.example.androidadvanced.ui.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,11 +9,13 @@ import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.LoginBinding
-import com.example.androidadvanced.home.HeroActivity
+import com.example.androidadvanced.ui.home.HeroActivity
+import com.example.androidadvanced.ui.home.SharedViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel : LoginViewModel by viewModels()
+    private val sViewModel: SharedViewModel by viewModels() // todo: remove later
     private lateinit var binding : LoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,5 +50,9 @@ class LoginActivity : AppCompatActivity() {
             viewModel.userLogin(emailRapid,passwordRapid)
             sViewModel.getHeroes() // todo: add token parameter
         }
+
+//        sViewModel.heros.observe(viewLifecycleOwner){
+//            Log.d("Tag !!!", it.toString())
+//        }
     }
 }
