@@ -31,7 +31,7 @@ class DetailsFragment(private val hero: Hero) : Fragment() {
         binding.tvHeroDetailTitle.text = hero.name
         binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
-        Log.w("Tag FightFrag", "FightFrag > onCreateView ********")
+        Log.w("Tag DetailsFrag", "FightFrag > onCreateView ********")
         setObservers()
         return binding.root
     }
@@ -41,14 +41,11 @@ class DetailsFragment(private val hero: Hero) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val makeFavoriteButton = getView()?.findViewById<Button>(R.id.bMakeFavorite)
 
-        Log.w("Tag FightFrag", "${hero.name} life: ${hero.currentLife}")
+        Log.w("Tag DetailsFrag", "${hero.name}")
 
         makeFavoriteButton?.setOnClickListener {
-            Log.w("Tag FightFrag", "FightFrag > ${hero.name}")
-            if (hero.currentLife <= 0)  {
-                Log.w("Tag FightFrag", "Life <= 0")
-                viewModel.returnToHeroList()
-            }
+            Log.w("Tag DetailsFrag", "FightFrag > ${hero.name}")
+            viewModel.returnToHeroList() // works. pulled logic out of if (hero.currentLife <= 0) {}
         }
     }
 
@@ -57,11 +54,11 @@ class DetailsFragment(private val hero: Hero) : Fragment() {
             viewModel.heroState.collect {
                 when (it) {
                     is SharedViewModel.HeroState.OnHeroReceived -> {
-                        Log.w("Tag FightFrag", ".OnHeroReceived")
+                        Log.w("Tag DetailsFrag", ".OnHeroReceived")
                     }
                     is SharedViewModel.HeroState.HeroLifeZero -> {
-                        Log.w("Tag FightFrag", ".HeroLifeZero")
-                        Log.w("Tag FightFrag", "Shared ViewModel > getHeroes() > heroesLiving = ${viewModel.heroesLiving}")
+                        Log.w("Tag DetailsFrag", ".HeroLifeZero")
+//                        Log.w("Tag DetailsFrag", "Shared ViewModel > getHeroes() > heroesLiving = ${viewModel.heroesLiving}")
                         activity?.supportFragmentManager?.popBackStack()
                     }
                     is SharedViewModel.HeroState.Idle -> Unit

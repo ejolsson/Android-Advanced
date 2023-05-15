@@ -20,17 +20,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = LoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.w("Tag", "onCreate")
+        Log.w("Tag LoginAct", "onCreate")
 
         lifecycleScope.launch {
             viewModel.loginState.collect(){
                 when(it){
                     is LoginViewModel.LoginState.OnLoginReceived -> {
-                        Log.w("Tag", "Login success, token = ${it.token}")
+//                        Log.w("Tag LoginAct", "Login success, token = ${it.token}")
                         HeroActivity.launch(this@LoginActivity, it.token)
 //                        MainActivity.launch(this@LoginActivity, it.token)
                     }
-                    is LoginViewModel.LoginState.Error -> Log.w("Tag", "Login error")
+                    is LoginViewModel.LoginState.Error -> Log.w("Tag LoginAct", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit
                 }
             }
@@ -42,9 +42,11 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.bLogin)
 
         loginButton.setOnClickListener {
-            Log.w("Tag","Login button tapped")
+            Log.w("Tag LoginAct","Login button tapped")
 //            viewModel.userLogin("${email.text}","${password.text}")
+            // todo: update login method
             viewModel.userLogin(emailRapid,passwordRapid)
+            sViewModel.getHeroes() // todo: add token parameter
         }
     }
 }

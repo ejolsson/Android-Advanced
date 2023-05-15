@@ -17,7 +17,7 @@ class HeroActivity : AppCompatActivity() {
         fun launch(context: Context, token: String) {
             val intent = Intent(context, HeroActivity::class.java)
             intent.putExtra(TAG_TOKEN, token)
-            Log.w("Tag","companion token = $token")
+//            Log.w("Tag HeroActivity","companion token = $token")
             context.startActivity(intent)
         }
     }
@@ -26,7 +26,7 @@ class HeroActivity : AppCompatActivity() {
     private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.w("Tag", "HeroAct > onCreate...")
+        Log.w("Tag HeroActivity", "HeroAct > onCreate...")
         super.onCreate(savedInstanceState)
         heroActivityBinding = HeroActivityBinding.inflate(layoutInflater)
         setContentView(heroActivityBinding.root)
@@ -36,6 +36,7 @@ class HeroActivity : AppCompatActivity() {
             .commitNow()
         intent.extras?.getString(TAG_TOKEN, "")?.let { token ->
             sharedViewModel.fetchHeroes(token)
+//            sharedViewModel.getHeroes() // hero list blank
         }
     }
 }

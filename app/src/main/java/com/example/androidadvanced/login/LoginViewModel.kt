@@ -18,7 +18,7 @@ class LoginViewModel : ViewModel() {
     val loginState: StateFlow<LoginState> = _loginState
 
     fun userLogin(email: String, password: String) {
-    Log.w("Tag","fun userLogin started...")
+    Log.w("Tag LoginVM","fun userLogin started...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/"
@@ -35,7 +35,7 @@ class LoginViewModel : ViewModel() {
 
             response.body?.let { responseBody ->
                 val tokenPublic = responseBody.string()
-                Log.w("Tag","Login successful. tokenPublic = $tokenPublic")
+                Log.w("Tag LoginVM","Login successful. tokenPublic = $tokenPublic")
                 _loginState.value= LoginState.OnLoginReceived(tokenPublic)
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
         }

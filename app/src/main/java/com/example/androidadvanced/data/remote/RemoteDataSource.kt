@@ -29,6 +29,6 @@ class RemoteDataSource {
     private val api: DragonBallApi = retrofit.create(DragonBallApi::class.java)
 
     suspend fun getHeroes(): List<GetHeroesResponse> {
-        return api.getHeros(GetHeroesRequestBody())
+        return api.getHeroes(GetHeroesRequestBody())
     }
 }

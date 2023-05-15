@@ -34,19 +34,19 @@ class SharedViewModel: ViewModel() {
     val heroes: LiveData<List<GetHeroesResponse>> get() = _heroes
 
     // advanced call
-    fun getHeroes() {
+    fun getHeroes() { // todo: add token parameter
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 repository.getHeroes()
             }
             _heroes.value = result
-            Log.d("Tag getHeroes", _heroes.toString())
-            Log.d("Tag getHeroes", "$result") // prints right result
+//            Log.d("Tag getHeroes", _heroes.toString())
+            Log.d("Tag getHeroes", "${result.first()}") // prints right result
         }
     }
 
     fun fetchHeroes(token: String) {
-        Log.w("Tag", "fetchHeroes...")
+        Log.w("Tag SharedVM", "fetchHeroes...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/"
@@ -54,7 +54,7 @@ class SharedViewModel: ViewModel() {
             val body = FormBody.Builder()
                 .add("name", "")
                 .build()
-            Log.w("Tag","tokenPublic used for fetchHeroes = $token")
+            Log.w("Tag SharedVM","tokenPublic used for fetchHeroes = $token")
             val request = Request.Builder()
                 .url(url)
                 .addHeader("Authorization","Bearer $token")
@@ -68,11 +68,11 @@ class SharedViewModel: ViewModel() {
                     try {
                         val response = responseBody.string()
                         val heroDtoArray = gson.fromJson(response, Array<HeroDTO>::class.java)
-                        Log.w("Tag", "heroDtoArray.asList = ${heroDtoArray.asList()}")
+                        Log.w("Tag SharedVM", "heroDtoArray.asList = ${heroDtoArray.asList()}")
                         val heroesFight = heroDtoArray.toList().map { Hero(it.name, it.photo, it.description) } // map API data to local model for simulation
-                        Log.w("Tag", "heroesFight = $heroesFight")
+                        Log.w("Tag SharedVM", "heroesFight = $heroesFight")
                         heroesLiving = heroesFight // initialize living heroes with api data
-                        Log.w("Tag", "heroesLiving = $heroesLiving")
+                        Log.w("Tag SharedVM", "heroesLiving = $heroesLiving")
                         _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
                     } catch (ex: Exception) {
                         _heroListState.value= HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
@@ -92,11 +92,11 @@ class SharedViewModel: ViewModel() {
     }
 
     fun returnToHeroList() {
-        Log.w("Tag", "fun returnToHeroList()...")
+        Log.w("Tag SharedVM", "fun returnToHeroList()...")
         selectedHero?.let { hero ->
             _heroState.value = HeroState.HeroLifeZero(hero)
             heroesLiving.firstOrNull {it.name == hero.name}?.let {
-                it.currentLife = hero.currentLife
+//                it.currentLife = hero.currentLife
                 _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
             }
         }

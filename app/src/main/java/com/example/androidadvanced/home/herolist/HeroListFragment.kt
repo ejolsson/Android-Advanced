@@ -28,7 +28,7 @@ class HeroListFragment(): Fragment(), HeroClicked {
         savedInstanceState: Bundle?
     ): View {
         binding = HeroListFragmentBinding.inflate(inflater)
-        Log.w("Tag", "HeroListFrag > onCreateView...")
+        Log.w("Tag HeroListFrag", "HeroListFrag > onCreateView...")
         setObservers()
         return binding.root
     }
@@ -43,25 +43,27 @@ class HeroListFragment(): Fragment(), HeroClicked {
                 when(it) {
                     is SharedViewModel.HeroListState.OnHeroListReceived -> {
                         Log.w("Tag HeroListFrag", ".OnHeroListReceived")
-                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}")
-                        it.heroes[0].currentLife = 0
-                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
+//                        Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroesFight = ${it.heroes}")
+//                        it.heroes[0].currentLife = 0 // this removes Broly by forcing her currentLife to 0
+//                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
+                        adapter = HeroCellAdapter(it.heroes, this@HeroListFragment) // removed life filter
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
                     }
-                    is SharedViewModel.HeroListState.OnHeroDeath -> {
+                    is SharedViewModel.HeroListState.OnHeroDeath -> { // todo: remove this state
                         Log.w("Tag HeroListFrag", ".OnHeroDeath")
-                        adapter = HeroCellAdapter(it.heroes.filter { it.currentLife > 0 }, this@HeroListFragment)
+                        adapter = HeroCellAdapter(it.heroes, this@HeroListFragment) // updated fm (it.heroes.filter { it.currentLife > 0 },...
+                        // todo: update the viewModel list instead of creating another adapter.
                         binding.rvListOfHeroes.layoutManager = LinearLayoutManager(binding.root.context)
                         binding.rvListOfHeroes.adapter = adapter
-                        Log.w("Tag HeroListFrag", "HeroListFrag > is ....OnHero Death > heroesLiving = ${viewModel.heroesLiving}")
+//                        Log.w("Tag HeroListFrag", "HeroListFrag > is ....OnHero Death > heroesLiving = ${viewModel.heroesLiving}")
                     }
                     is SharedViewModel.HeroListState.ErrorJSON ->
                         Log.w("Tag HeroListFrag", "HeroState ErrorJSON")
                     is SharedViewModel.HeroListState.ErrorResponse ->
                         Log.w("Tag HeroListFrag", "HeroState ErrorResponse")
                     is SharedViewModel.HeroListState.Idle -> Unit
-                    is SharedViewModel.HeroListState.OnHeroSelected -> {
+                    is SharedViewModel.HeroListState.OnHeroSelected -> { // navigate to clicked-on hero
                         Log.w("Tag HeroListFrag", ".OnHeroSelected")
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.fFragment, DetailsFragment(it.hero))
