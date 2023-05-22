@@ -12,16 +12,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.DetailsBinding
-import com.example.androidadvanced.ui.home.SharedViewModel
-import com.example.androidadvanced.data.Hero
-import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import com.example.androidadvanced.ui.home.HeroViewModel
+import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
-class DetailsFragment(private val hero: GetHeroesResponse) : Fragment() { // was Hero
+class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
 
     private lateinit var binding: DetailsBinding
-    private val viewModel: SharedViewModel by activityViewModels()
+    private val viewModel: HeroViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +31,7 @@ class DetailsFragment(private val hero: GetHeroesResponse) : Fragment() { // was
         binding.tvHeroDetailTitle.text = hero.name
         binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
-        Log.w("Tag DetailsFrag", "FightFrag > onCreateView ********")
+        Log.d("Tag DetailsFrag", "FightFrag > onCreateView ********")
         setObservers()
         return binding.root
     }
@@ -42,10 +41,10 @@ class DetailsFragment(private val hero: GetHeroesResponse) : Fragment() { // was
         super.onViewCreated(view, savedInstanceState)
         val makeFavoriteButton = getView()?.findViewById<Button>(R.id.bMakeFavorite)
 
-        Log.w("Tag DetailsFrag", "${hero.name}")
+        Log.d("Tag DetailsFrag", "${hero.name}")
 
         makeFavoriteButton?.setOnClickListener {
-            Log.w("Tag DetailsFrag", "FightFrag > ${hero.name}")
+            Log.d("Tag DetailsFrag", "FightFrag > ${hero.name}")
             viewModel.returnToHeroList() // works. pulled logic out of if (hero.currentLife <= 0) {}
         }
     }
@@ -54,15 +53,15 @@ class DetailsFragment(private val hero: GetHeroesResponse) : Fragment() { // was
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.heroState.collect {
                 when (it) {
-                    is SharedViewModel.HeroState.OnHeroReceived -> {
-                        Log.w("Tag DetailsFrag", ".OnHeroReceived")
+                    is HeroViewModel.HeroState.OnHeroReceived -> {
+                        Log.d("Tag DetailsFrag", ".OnHeroReceived")
                     }
-                    is SharedViewModel.HeroState.HeroLifeZero -> {
-                        Log.w("Tag DetailsFrag", ".HeroLifeZero")
+                    is HeroViewModel.HeroState.HeroLifeZero -> {
+                        Log.d("Tag DetailsFrag", ".HeroLifeZero")
 //                        Log.w("Tag DetailsFrag", "Shared ViewModel > getHeroes() > heroesLiving = ${viewModel.heroesLiving}")
                         activity?.supportFragmentManager?.popBackStack()
                     }
-                    is SharedViewModel.HeroState.Idle -> Unit
+                    is HeroViewModel.HeroState.Idle -> Unit
                 }
             }
         }

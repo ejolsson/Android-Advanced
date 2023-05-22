@@ -4,23 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidadvanced.databinding.HeroCellBinding
-import com.example.androidadvanced.data.Hero
-import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 
-interface HeroClicked {
-    fun heroSelectionClicked(hero: GetHeroesResponse) // was Hero
+interface HeroAdapterCallback {
+    fun heroSelectionClicked(hero: SuperHero) // was Hero, then GetHeroResponse (worked then)
 }
 
-class HeroCellAdapter(
-    private val listHeroes: List<GetHeroesResponse>, // was <Hero>
-    private val callback: HeroClicked,
+class HeroCellAdapter( // adding
+//    private val listHeroes: List<SuperHero>, // was <Hero>
+    private val callback: HeroAdapterCallback, // this callback takes SuperHero from
     ): RecyclerView.Adapter<HeroCellAdapter.MainActivityViewHolder>() {
 
-    class MainActivityViewHolder(private var item: HeroCellBinding, private val callback: HeroClicked): RecyclerView.ViewHolder(item.root) {
-        fun showHero(hero: GetHeroesResponse) { // was Hero
+    private var listHeroes = listOf<SuperHero>() // moved this parameter out of definition line to here
+
+    class MainActivityViewHolder(private var item: HeroCellBinding, private val callback: HeroAdapterCallback): RecyclerView.ViewHolder(item.root) {
+        fun showHero(hero: SuperHero) { // was Hero, then was GetHeroesResponse
             item.tvHeroNameCell.text = hero.name
-            Picasso.get().load(hero.photo).into(item.ivHeroThumb)
+            Picasso.get().load(hero.photo).into(item.ivHeroThumb) // todo: use another tool other than Picasso?
             item.lLHeroCell.setOnClickListener {
                 callback.heroSelectionClicked(hero)
             }

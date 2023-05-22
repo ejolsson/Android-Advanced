@@ -1,5 +1,6 @@
 package com.example.androidadvanced.data.remote
 
+import android.util.Log
 import com.example.androidadvanced.data.remote.request.GetHeroesRequestBody
 import com.example.androidadvanced.data.remote.response.GetHeroesResponse
 import com.squareup.moshi.Moshi
@@ -28,7 +29,15 @@ class RemoteDataSource {
         .build()
     private val api: DragonBallApi = retrofit.create(DragonBallApi::class.java)
 
-    suspend fun getHeroes(): List<GetHeroesResponse> { // called in Repository.kt
-        return api.getHeroes(GetHeroesRequestBody())
+    suspend fun getHeroes2(): List<GetHeroesResponse> { // called in Repository.kt
+        Log.d("Tag RemoteDataSource", "moshi: $moshi")
+        // prints: moshi: com.squareup.moshi.Moshi@ea783b
+        Log.d("Tag RemoteDataSource", "okHttpClient: $okHttpClient")
+        // prints: okHttpClient: okhttp3.OkHttpClient@d195b58
+        Log.d("Tag RemoteDataSource", "retrofit: $retrofit")
+        // prints: retrofit: retrofit2.Retrofit@bb0e4b1
+        Log.d("Tag RemoteDataSource", "api: $api")
+        // prints: api: retrofit2.Retrofit$1@2fe5d17
+        return api.getHeroes1(GetHeroesRequestBody())
     }
 }
