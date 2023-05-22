@@ -40,50 +40,6 @@ class HeroViewModel(context: Context): ViewModel() {
         }
     }
 
-//    fun fetchHeroes(token: String) {
-//        Log.w("Tag SharedVM", "fetchHeroes...")
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val client = OkHttpClient()
-//            val baseUrl = "https://dragonball.keepcoding.education/api/"
-//            val url = "${baseUrl}heros/all"
-//            val body = FormBody.Builder()
-//                .add("name", "")
-//                .build()
-//            Log.w("Tag SharedVM","tokenPublic used for fetchHeroes = $token")
-//            val request = Request.Builder()
-//                .url(url)
-//                .addHeader("Authorization","Bearer $token")
-//                .post(body)
-//                .build()
-//            val call = client.newCall(request)
-//            val response = call.execute()
-//            if (response.isSuccessful) {
-//                response.body?.let { responseBody ->
-//                    val gson = Gson()
-//                    try {
-//                        val response = responseBody.string()
-//                        val heroDtoArray = gson.fromJson(response, Array<HeroDTO>::class.java)
-//                        Log.w("Tag SharedVM", "heroDtoArray.asList = ${heroDtoArray.asList()}")
-//                        val heroesFight = heroDtoArray.toList().map { Hero(it.id, it.name, it.photo, it.description) } // map only desired API data to local model for simulation
-//                        Log.w("Tag SharedVM", "heroesFight = $heroesFight")
-//                        heroesLiving = heroesFight // initialize living heroes with api data
-//                        Log.w("Tag SharedVM", "heroesLiving = $heroesLiving")
-////                        _heroListState.value = HeroListState.OnHeroListReceived(heroesFight)
-//                    } catch (ex: Exception) {
-//                        _heroListState.value=
-//                            HeroListState.ErrorJSON("Something went wrong in the fetchHeroes response")
-//                    }
-//                } ?: run { _heroListState.value =
-//                    HeroListState.ErrorResponse("Something went wrong in the fetchHeroes request")
-//                }
-//            }
-//            else {
-//                _heroListState.value =
-//                    HeroListState.ErrorResponse("Something went wrong in the fetchHeroes response")
-//            }
-//        }
-//    } // v1 API call
-
     fun selectHero(hero: SuperHero) { // was Hero, then GetHeroesResponse
         _heroListState.value = HeroListState.OnHeroSelected(hero)
         _heroState.value = HeroState.OnHeroReceived(hero)
@@ -95,8 +51,7 @@ class HeroViewModel(context: Context): ViewModel() {
         selectedHero?.let { hero ->
             _heroState.value = HeroState.HeroLifeZero(hero)
             heroesLiving.firstOrNull {it.name == hero.name}?.let {
-//                it.currentLife = hero.currentLife
-//                _heroListState.value = HeroListState.OnHeroDeath(heroesLiving)
+                // TODO: create a transition back to HeroesList
                 Log.d("Tag HeroVM", "Hi, need to create a transition back to HeroesList")
             }
         }

@@ -37,19 +37,17 @@ class HeroActivity : AppCompatActivity() {
 //        }
 
         val testButton = findViewById<Button>(R.id.bTest)
-
         testButton.setOnClickListener {
             Log.d("Tag","Test button clicked")
 //            Log.d("Tag", "${viewModel}")
         }
-
     }
 
     private fun presentHeroesListFragment() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fFragment.id, HeroListFragment())
-            .commit() // was .commitNow()
+            .commitNow() // was .commitNow()
     }
 
 

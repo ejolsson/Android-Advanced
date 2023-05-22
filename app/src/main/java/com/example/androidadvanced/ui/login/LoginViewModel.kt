@@ -64,7 +64,7 @@ class LoginViewModel : ViewModel() {
 
             response.body?.let { responseBody ->
                 val tokenPublic = responseBody.string()
-                Log.d("Tag LoginVM","Login successful. tokenPublic = $tokenPublic")
+                Log.d("Tag LoginVM","Login tokenPublic = $tokenPublic")
                 _loginState.value= LoginState.OnLoginReceived(tokenPublic)
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
         }

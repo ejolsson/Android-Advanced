@@ -46,6 +46,7 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'androidx.core:core-ktx:1.10.1'
+    kapt 'com.android.databinding:compiler:3.1.4' // trying to debug HeroListBinding issue
 
     // networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
