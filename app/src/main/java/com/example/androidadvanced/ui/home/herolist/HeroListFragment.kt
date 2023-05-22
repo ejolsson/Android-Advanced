@@ -18,7 +18,6 @@ import com.example.androidadvanced.ui.model.SuperHero
 import kotlinx.coroutines.launch
 
 class HeroListFragment(): Fragment(), HeroAdapterCallback {
-
     private lateinit var binding: HeroListFragmentBinding // not showing during runtime
     private lateinit var viewModel: HeroViewModel
     private var adapter = HeroCellAdapter(this)
@@ -30,7 +29,6 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
         binding = HeroListFragmentBinding.inflate(inflater)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = HeroViewModel(requireContext()) // adv class puts it here
@@ -40,7 +38,21 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
         configureListeners()
         loadHeroes()
     }
-
+    private fun configureAdapter() {
+        Log.d("Tag", "HeroListFrag > configureAdapter...")
+        with(binding){
+            rvListOfHeroes.layoutManager = LinearLayoutManager(requireContext())
+            rvListOfHeroes.adapter = adapter
+        }
+    }
+    private fun loadHeroes() {
+        viewModel.getHeroes5()
+        Log.w("Tag","HeroListFrag > loadHeroes > getHeroes5 ${viewModel.getHeroes5()}")
+        // TODO: this prints "kotlin.Unit"
+    }
+    override fun heroSelectionClicked(hero: SuperHero) { // was Hero
+        viewModel.selectHero(hero)
+    }
     private fun configureListeners() {
         // todo: add favorite button
         Log.d("Tag HeroListFrag", "Favorite Heroes are... TBD")
@@ -51,8 +63,7 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
                     when (it) {
                         is HeroViewModel.HeroListState.OnHeroListReceived -> {
                             Log.d("Tag HeroListFrag", ".OnHeroListReceived")
-                            Log.w("Tag HeroListFrag", "HeroListFrag > onViewCreated > heroes = ${it.heroes2}")
-
+                            Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
                             adapter = HeroCellAdapter(
 //                                it.heroes2, // todo: needed to pass heroes?
                                 this@HeroListFragment
@@ -81,19 +92,6 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
             }
         }
 
-    private fun configureAdapter() {
-        with(binding){
-            rvListOfHeroes.layoutManager = LinearLayoutManager(requireContext())
-            rvListOfHeroes.adapter = adapter
-        }
-    }
 
-    private fun loadHeroes() {
-        viewModel.getHeroes5()
-        Log.d("Tag","${viewModel.getHeroes5()}")
-    }
-    override fun heroSelectionClicked(hero: SuperHero) { // was Hero
-            viewModel.selectHero(hero)
-        }
 
 }

@@ -35,7 +35,7 @@ class HeroViewModel(context: Context): ViewModel() {
             }
             _heroes.value = result
 //            Log.d("Tag getHeroes", _heroes.toString())
-            Log.d("Tag", "getHeroes5 List<SuperHero>.first = ${result.first()}") // prints right result
+            Log.d("Tag", "HeroVM > fun getHeroes5: List<SuperHero>.first = ${result.first()}") // prints right result
             _heroListState.value = HeroListState.OnHeroListReceived(result)
         }
     }

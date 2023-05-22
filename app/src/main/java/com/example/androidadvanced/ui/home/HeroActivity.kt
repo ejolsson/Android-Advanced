@@ -13,9 +13,7 @@ import com.example.androidadvanced.ui.home.herolist.HeroListFragment
 import com.example.androidadvanced.ui.model.SuperHero
 
 class HeroActivity : AppCompatActivity() {
-
     companion object {
-
         const val TAG_TOKEN = "TAG_TOKEN"
         fun launch(context: Context, token: String) {
             val intent = Intent(context, HeroActivity::class.java)
@@ -23,7 +21,6 @@ class HeroActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
     } // connects to LoginAct > onCreate > lifecycleScope.launch > when is LoginViewModel.LoginState.OnLoginReceived
-
     private lateinit var binding: HeroActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,15 +39,12 @@ class HeroActivity : AppCompatActivity() {
 //            Log.d("Tag", "${viewModel}")
         }
     }
-
     private fun presentHeroesListFragment() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fFragment.id, HeroListFragment())
             .commitNow() // was .commitNow()
     }
-
-
     // todo: add presentHeroesDetailsFragment()
 //    fun presentHeroesDetailsFragment() {
 //        supportFragmentManager
