@@ -9,5 +9,5 @@ class LoginRepository {
 
     suspend fun getLogin3(username: String, password: String): String {
         return loginRemoteDataSource.getLogin2(username, password)
-    } // called in LoginVM
+    }
 }

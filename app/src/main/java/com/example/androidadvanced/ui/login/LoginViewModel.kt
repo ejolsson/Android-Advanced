@@ -68,14 +68,14 @@ class LoginViewModel : ViewModel() {
                 _loginState.value= LoginState.OnLoginReceived(tokenPublic)
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
         }
-    } // v1 login function
+    }
 
     fun userLogin4(username: String, password: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 repository.getLogin3(username, password)
             }
-            token = result.toString()
+            token = result
             _loginState.value = LoginState.OnLoginReceived(token)
         }
     }
