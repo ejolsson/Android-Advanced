@@ -1,7 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id "kotlin-kapt" // added for Room
+//    id 'com.google.dagger.hilt.android'
+//    id("androidx.navigation.safeargs")
+//    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id "kotlin-kapt" // added for Room, make sure this item is listed last
 }
 
 android {
@@ -40,33 +43,49 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0' // updated
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3' // added 5/23
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3' // added 5/23
+
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.7' // L5, 0.37.00 needed for .. by viewModels
-
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'androidx.core:core-ktx:1.10.1'
     kapt 'com.android.databinding:compiler:3.1.4' // trying to debug HeroListBinding issue
 
-    // networking
+    // Networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
-//    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0") // use for login
+//    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version") // https://stackoverflow.com/questions/73058197/convert-string-to-object-using-moshi
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3' // not in class example
 
-    // Room DB
-//    implementation 'androidx.room:room-runtime:2.5.1'
-//    annotationProcessor 'androidx.room:room-compiler:2.5.1'
+    // Room
     implementation("androidx.room:room-runtime:2.5.1") // fm class
     implementation("androidx.room:room-ktx:2.5.1") // fm class
     kapt("androidx.room:room-compiler:2.5.1") // fm class
+    //    annotationProcessor 'androidx.room:room-compiler:2.5.1'
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.45"
+    kapt "com.google.dagger:hilt-compiler:2.45"
+
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // testing
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.2.1")
-    testImplementation("com.google.truth:truth:1.0") //Alternativa: HAMCREST
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.2.1")
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    testImplementation("com.google.truth:truth:1.0") //Alternativa: HAMCREST
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation 'com.google.dagger:hilt-android-testing:2.45'
+    kaptTest 'com.google.dagger:hilt-compiler:2.45'
+    testImplementation("org.robolectric:robolectric:4.10.3")
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

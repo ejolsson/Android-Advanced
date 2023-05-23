@@ -1,5 +1,6 @@
 package com.example.androidadvanced.ui.home.herolist
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -49,6 +50,11 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
         viewModel.getHeroes5()
         Log.w("Tag","HeroListFrag > loadHeroes > getHeroes5 ${viewModel.getHeroes5()}")
         // TODO: this prints "kotlin.Unit"
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
     override fun heroSelectionClicked(hero: SuperHero) { // was Hero
         viewModel.selectHero(hero)

@@ -58,8 +58,8 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             Log.d("Tag LoginAct","Login button tapped")
 //            viewModel.userLogin("${email.text}","${password.text}") // v1
-            viewModel.userLogin(emailRapid,passwordRapid) // v1 rapid
-//            viewModel.userLogin4(emailRapid, passwordRapid) // v3 crash
+//            viewModel.userLogin(emailRapid,passwordRapid) // v1 rapid
+            viewModel.userLogin4(emailRapid, passwordRapid) // v3 crash
         }
     }
 }
