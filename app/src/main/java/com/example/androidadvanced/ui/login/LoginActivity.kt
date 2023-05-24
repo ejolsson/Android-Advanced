@@ -38,9 +38,7 @@ class LoginActivity : AppCompatActivity() {
                     is LoginViewModel.LoginState.OnLoginReceived -> {
                         Log.d("Tag LoginAct", "Login token = ${it.token}")
                         Log.d("Tag", "..........................")
-                        HeroActivity.launch(this@LoginActivity, it.token) // moving fm HeroAct to HeroListFrag
-//                        HeroListFragment.launch(this@LoginActivity, it.token) // used to nav to HeroActivity & pass token, defined in class HeroListFragment
-//                        MainActivity.launch(this@LoginActivity, it.token)
+                        HeroActivity.launch(this@LoginActivity, it.token)
                     }
                     is LoginViewModel.LoginState.Error -> Log.d("Tag LoginAct", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit
@@ -59,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d("Tag LoginAct","Login button tapped")
 //            viewModel.userLogin("${email.text}","${password.text}") // v1
 //            viewModel.userLogin(emailRapid,passwordRapid) // v1 rapid
-            viewModel.userLogin4(emailRapid, passwordRapid) // v3 crash
+            viewModel.userLogin4(emailRapid, passwordRapid)
         }
     }
 }

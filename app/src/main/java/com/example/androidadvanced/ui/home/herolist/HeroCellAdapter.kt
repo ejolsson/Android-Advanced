@@ -46,4 +46,9 @@ class HeroCellAdapter( // adding
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         holder.showHero(listHeroes[position])
     }
+
+    fun updateList(list: List<SuperHero>) {
+        listHeroes = list
+        notifyDataSetChanged()
+    }
 }

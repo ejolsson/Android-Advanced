@@ -51,6 +51,9 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
         Log.w("Tag","HeroListFrag > loadHeroes > getHeroes5 ${viewModel.getHeroes5()}")
         // TODO: this prints "kotlin.Unit"
     }
+    private fun showHeroes(heroes: List<SuperHero>) {
+        adapter.updateList(heroes)
+    }
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
@@ -70,13 +73,14 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
                         is HeroViewModel.HeroListState.OnHeroListReceived -> {
                             Log.d("Tag HeroListFrag", ".OnHeroListReceived")
                             Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
-                            adapter = HeroCellAdapter(
-//                                it.heroes2, // todo: needed to pass heroes?
-                                this@HeroListFragment
-                            ) // removed life filter, toggle heroes & heroes2
-                            binding.rvListOfHeroes.layoutManager =
-                                LinearLayoutManager(binding.root.context)
-                            binding.rvListOfHeroes.adapter = adapter
+                            showHeroes(it.heroes2)
+//                            adapter = HeroCellAdapter(
+////                                it.heroes2, // todo: needed to pass heroes?
+//                                this@HeroListFragment
+//                            ) // removed life filter, toggle heroes & heroes2
+//                            binding.rvListOfHeroes.layoutManager =
+//                                LinearLayoutManager(binding.root.context)
+//                            binding.rvListOfHeroes.adapter = adapter
                         }
                         is HeroViewModel.HeroListState.OnHeroSelected -> { // navigate to clicked-on hero
                             Log.d("Tag HeroListFrag", ".OnHeroSelected")
@@ -87,6 +91,7 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
                         }
                         is HeroViewModel.HeroListState.OnHeroesUpdated -> {
                             Log.d("Tag HeroListFrag", ".OnHeroesUpdated")
+                            adapter.notifyDataSetChanged()
                         }
                         is HeroViewModel.HeroListState.ErrorJSON ->
                             Log.d("Tag HeroListFrag", "HeroState ErrorJSON")
@@ -97,7 +102,4 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
                 }
             }
         }
-
-
-
 }

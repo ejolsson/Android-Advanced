@@ -8,8 +8,10 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.HeroActivityBinding
+import com.example.androidadvanced.databinding.TestFragmentBinding
 import com.example.androidadvanced.ui.details.DetailsFragment
 import com.example.androidadvanced.ui.home.herolist.HeroListFragment
+import com.example.androidadvanced.ui.home.herolist.TestFragment
 import com.example.androidadvanced.ui.model.SuperHero
 
 class HeroActivity : AppCompatActivity() {
@@ -18,7 +20,7 @@ class HeroActivity : AppCompatActivity() {
         fun launch(context: Context, token: String) {
             val intent = Intent(context, HeroActivity::class.java)
             intent.putExtra(TAG_TOKEN, token)
-            context.startActivity(intent)
+            context.startActivity(intent) // w/o this, can't move past login
         }
     } // connects to LoginAct > onCreate > lifecycleScope.launch > when is LoginViewModel.LoginState.OnLoginReceived
     private lateinit var binding: HeroActivityBinding
@@ -42,7 +44,7 @@ class HeroActivity : AppCompatActivity() {
     private fun presentHeroesListFragment() {
         supportFragmentManager
             .beginTransaction()
-            .replace(binding.fFragment.id, HeroListFragment())
+            .replace(binding.fFragment.id, HeroListFragment()) //  TestFragment()
             .commitNow() // was .commitNow()
     }
     // todo: add presentHeroesDetailsFragment()
