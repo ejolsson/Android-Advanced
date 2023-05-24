@@ -25,6 +25,11 @@ class HeroCellAdapter( // adding
 //            Log.d("Tag", "SuperHero name = $hero.name")
             binding.tvHeroNameCell.text = hero.name
             Picasso.get().load(hero.photo).into(binding.ivHeroThumb) // todo: use another tool other than Picasso?
+            if (hero.favorite) {
+                Log.d("Tag", "${hero.name} is a favorite")
+                binding.star.isChecked
+                binding.star.alpha = 1.0F
+            }
             binding.lLHeroCell.setOnClickListener {
                 callback.heroSelectionClicked(hero)
             }

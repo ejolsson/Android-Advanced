@@ -5,5 +5,5 @@ data class SuperHero(
     val name: String,
     val description: String,
     val photo: String,
-    val favorite: Boolean
+    var favorite: Boolean
 )

@@ -22,7 +22,7 @@ class Repository(context: Context) {
             // getHeroes2() returns api.getHeroes1(GetHeroesRequestBody())
             localDataSource.insertHeroes(remoteToLocalMapper.mapGetHeroResponse(remoteSuperHeroes))
         }
-        Log.d("Tag", "localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3()).first() = ${localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3()).first()}")
+//        Log.d("Tag", "localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3()).first() = ${localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3()).first()}")
         // prints SuperHero(...)
         return localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3())
     } // called in SharedVM

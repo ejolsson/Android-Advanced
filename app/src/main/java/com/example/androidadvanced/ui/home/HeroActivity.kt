@@ -8,11 +8,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.HeroActivityBinding
-import com.example.androidadvanced.databinding.TestFragmentBinding
-import com.example.androidadvanced.ui.details.DetailsFragment
 import com.example.androidadvanced.ui.home.herolist.HeroListFragment
-import com.example.androidadvanced.ui.home.herolist.TestFragment
-import com.example.androidadvanced.ui.model.SuperHero
 
 class HeroActivity : AppCompatActivity() {
     companion object {

@@ -17,7 +17,7 @@ import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
-class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
+class DetailsFragment(private var hero: SuperHero) : Fragment() { // was Hero
 
     private lateinit var binding: DetailsBinding
 //    private val viewModel: HeroViewModel by activityViewModels()
@@ -33,8 +33,7 @@ class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
         binding.tvHeroDetailTitle.text = hero.name
         binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
-        Log.d("Tag DetailsFrag", "DetailsFrag > onCreateView ********") // prints ok, nav gtg
-        Log.i("Tag DetailsFrag", "DetailsFrag > hero.name = ${hero.name}") // prints ok, hero data gtg
+        Log.d("Tag DetailsFrag", "DetailsFrag > makeFavoriteButton ${hero.name} favorite status is: ${hero.favorite}")
         setObservers()
         return binding.root
     }
@@ -45,11 +44,11 @@ class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
 //        viewModel = HeroViewModel(requireContext()) // lateinit property viewModel has not been initialized
         val makeFavoriteButton = getView()?.findViewById<Button>(R.id.bMakeFavorite)
 
-        Log.d("Tag DetailsFrag", "${hero.name}")
-
         makeFavoriteButton?.setOnClickListener {
-            Log.d("Tag DetailsFrag", "FightFrag > ${hero.name}")
-            viewModel.returnToHeroList() // works. pulled logic out of if (hero.currentLife <= 0) {}
+            viewModel.makeHeroFavorite(hero)
+            hero.favorite = true
+            binding.cbHeroDetail.alpha = 1.0F
+            Log.d("Tag DetailsFrag", "${hero.name} favorite status after: ${hero.favorite}")
         }
     }
 

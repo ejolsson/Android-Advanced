@@ -1,5 +1,5 @@
 # Android-Advanced
-Bootcamp project involving MVVM architecture, a Room local database, API connections, Google Maps, Hilt, and SOLID/clean principles.
+Bootcamp project involving MVVM architecture, a Room local database, API connections using Retrofit, Google Maps, Hilt, and SOLID/clean principles.
 
 The application presents a Dragon Ballz battle simulator using API data and login credentials. 
 * The first window presents a user login with passord. 

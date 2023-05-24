@@ -5,5 +5,16 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="FavoriteCheckBox" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@color/cardview_light_background</item>
+<!--        <item name="colorControlActivated">@color/cardview_light_background</item>-->
+        <item name="android:textColor">#FFFF3F3C</item>
+    </style>
+
+    <style name="FavoriteCheckBox2" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/checked</item>
+        <item name="android:textColorSecondary">@color/unchecked</item>
+    </style>
+
     <style name="Theme.AndroidAdvanced" parent="Base.Theme.AndroidAdvanced" />
 </resources>
