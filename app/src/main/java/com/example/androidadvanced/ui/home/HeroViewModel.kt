@@ -57,6 +57,12 @@ class HeroViewModel(context: Context): ViewModel() {
         }
     }
 
+    fun makeHeroFavorite(hero: SuperHero) {
+        Log.d("Tag HeroVM", "fun makeHeroFavorite()...")
+        Log.d("Tag DetailsFrag", "${hero.name} favorite status before: ${hero.favorite}")
+        hero.favorite = true
+    }
+
     sealed class HeroListState {
         object Idle: HeroListState()
 //        data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
