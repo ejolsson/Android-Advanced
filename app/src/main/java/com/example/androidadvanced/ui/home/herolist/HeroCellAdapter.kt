@@ -21,8 +21,8 @@ class HeroCellAdapter( // adding
     // todo: ?? How is the hero data getting here??
     class HeroViewHolder(private var binding: HeroCellBinding, private val callback: HeroAdapterCallback): RecyclerView.ViewHolder(binding.root) {
         fun showHero(hero: SuperHero) { // was Hero, then was GetHeroesResponse
-            Log.d("Tag", "HeroCellAdapter > HeroViewHolder > showHero...")
-            Log.d("Tag", "SuperHero name = $hero.name")
+//            Log.d("Tag", "HeroCellAdapter > HeroViewHolder > showHero...")
+//            Log.d("Tag", "SuperHero name = $hero.name")
             binding.tvHeroNameCell.text = hero.name
             Picasso.get().load(hero.photo).into(binding.ivHeroThumb) // todo: use another tool other than Picasso?
             binding.lLHeroCell.setOnClickListener {
@@ -36,7 +36,7 @@ class HeroCellAdapter( // adding
             parent,
             false
         )
-        Log.d("Tag", "HeroCellAdapter > onCreateViewHolder...")
+//        Log.d("Tag", "HeroCellAdapter > onCreateViewHolder...")
         return HeroViewHolder(binding, callback)
     }
     override fun getItemCount(): Int {

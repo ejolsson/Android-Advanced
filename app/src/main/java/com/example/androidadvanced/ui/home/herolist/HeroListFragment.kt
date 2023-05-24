@@ -74,6 +74,7 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
                             Log.d("Tag HeroListFrag", ".OnHeroListReceived")
                             Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
                             showHeroes(it.heroes2)
+                            // Fundamentals way of using adapter
 //                            adapter = HeroCellAdapter(
 ////                                it.heroes2, // todo: needed to pass heroes?
 //                                this@HeroListFragment

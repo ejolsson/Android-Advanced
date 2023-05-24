@@ -57,7 +57,8 @@ class LoginActivity : AppCompatActivity() {
             Log.d("Tag LoginAct","Login button tapped")
 //            viewModel.userLogin("${email.text}","${password.text}") // v1
 //            viewModel.userLogin(emailRapid,passwordRapid) // v1 rapid
-            viewModel.userLogin4(emailRapid, passwordRapid)
+//            viewModel.userLogin4(emailRapid, passwordRapid)
+            viewModel.skipLogin()
         }
     }
 }

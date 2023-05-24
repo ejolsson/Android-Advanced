@@ -80,6 +80,14 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    fun skipLogin() {
+        viewModelScope.launch {
+            val result = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
+            token = result
+            _loginState.value = LoginState.OnLoginReceived(token)
+        }
+    }
+
     sealed class LoginState {
         object Idle: LoginState()
         data class Error(val error: String): LoginState()

@@ -20,18 +20,21 @@ import kotlinx.coroutines.launch
 class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
 
     private lateinit var binding: DetailsBinding
-    private val viewModel: HeroViewModel by activityViewModels()
+//    private val viewModel: HeroViewModel by activityViewModels()
+    private lateinit var viewModel: HeroViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = HeroViewModel(requireContext()) // onViewCreated has issues, trying here.. it works!
         binding = DetailsBinding.inflate(inflater)
         binding.tvHeroDetailTitle.text = hero.name
         binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
-        Log.d("Tag DetailsFrag", "FightFrag > onCreateView ********")
+        Log.d("Tag DetailsFrag", "DetailsFrag > onCreateView ********") // prints ok, nav gtg
+        Log.i("Tag DetailsFrag", "DetailsFrag > hero.name = ${hero.name}") // prints ok, hero data gtg
         setObservers()
         return binding.root
     }
@@ -39,6 +42,7 @@ class DetailsFragment(private val hero: SuperHero) : Fragment() { // was Hero
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        viewModel = HeroViewModel(requireContext()) // lateinit property viewModel has not been initialized
         val makeFavoriteButton = getView()?.findViewById<Button>(R.id.bMakeFavorite)
 
         Log.d("Tag DetailsFrag", "${hero.name}")
