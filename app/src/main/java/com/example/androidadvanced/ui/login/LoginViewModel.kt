@@ -24,7 +24,6 @@ class LoginViewModel : ViewModel() {
     // v1 login
     fun userLogin(email: String, password: String) {
     Log.d("Tag LoginVM","fun userLogin started...")
-        // TODO: Refactor to use retrofit
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient() // v2 LoginRemoteDataSource
             val baseUrl = "https://dragonball.keepcoding.education/api/" // v2 LoginRemoteDataSource
@@ -37,7 +36,6 @@ class LoginViewModel : ViewModel() {
             val formBody = FormBody.Builder().build()
             Log.d("Tag LoginVM", "formBody: $formBody")
             // prints: formBody: okhttp3.FormBody@2949976
-
 
             val request = Request.Builder()
                 .url(url)

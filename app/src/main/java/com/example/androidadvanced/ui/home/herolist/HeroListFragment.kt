@@ -50,8 +50,6 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
     }
     private fun loadHeroes() {
         viewModel.getHeroes5()
-        Log.w("Tag","HeroListFrag > loadHeroes > getHeroes5 ${viewModel.getHeroes5()}")
-        // TODO: this prints "kotlin.Unit"
     }
     private fun showHeroes(heroes: List<SuperHero>) {
         adapter.updateList(heroes)

@@ -84,7 +84,6 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
         data class OnHeroSelected(val hero: SuperHero): HeroListState() // was Hero, then GetHeroesResponse
 
         object OnHeroesUpdated: HeroListState()
-//        data class OnHeroDeath(val heroes: List<SuperHero>): HeroListState() // was <Hero> todo REMOVE
         data class ErrorJSON(val error: String): HeroListState()
         data class ErrorResponse(val error: String): HeroListState()
     }
