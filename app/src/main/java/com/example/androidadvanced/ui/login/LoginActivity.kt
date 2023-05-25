@@ -10,13 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.LoginBinding
 import com.example.androidadvanced.ui.home.HeroActivity
-import com.example.androidadvanced.ui.home.HeroViewModel
-import com.example.androidadvanced.ui.home.herolist.HeroListFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 
+//@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val viewModel : LoginViewModel by viewModels()
     private lateinit var binding : LoginBinding

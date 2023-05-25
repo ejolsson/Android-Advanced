@@ -7,14 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidadvanced.data.Repository
+import com.example.androidadvanced.data.RepositoryImpl
 import com.example.androidadvanced.ui.model.SuperHero
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class HeroViewModel(context: Context): ViewModel() {
+@HiltViewModel
+class HeroViewModel @Inject constructor(private val repository: Repository): ViewModel() { // removed , context: Context fm injection
 
     private val _heroListState = MutableStateFlow<HeroListState>(HeroListState.Idle)
     val heroListState: StateFlow<HeroListState> = _heroListState
@@ -23,11 +27,10 @@ class HeroViewModel(context: Context): ViewModel() {
     lateinit var heroesLiving: List<SuperHero> // was <Hero>, then <GetHeroesResponse>
     var selectedHero: SuperHero? = null // was Hero, then GetHeroesResponse
 
-    private val repository = Repository(context)
-    private val _heroes = MutableLiveData<List<SuperHero>>() // was val heroes, then GetHeroesResponse
-    val heroes2: LiveData<List<SuperHero>> get() = _heroes // was val heroes, then GetHeroesResponse
+//    private val repository = Repository(context)
+    private val _heroes = MutableLiveData<List<SuperHero>>()
+    val heroes2: LiveData<List<SuperHero>> get() = _heroes
 
-    // advanced call
     fun getHeroes5() { // todo: add token parameter
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
@@ -35,12 +38,23 @@ class HeroViewModel(context: Context): ViewModel() {
             }
             _heroes.value = result
 //            Log.d("Tag getHeroes", _heroes.toString())
-            Log.d("Tag", "HeroVM > fun getHeroes5: List<SuperHero>.first = ${result.first()}") // prints right result
+            Log.d("Tag", "HeroVM > fun getHeroes5: List<SuperHero>.first = ${result.first()}")
             _heroListState.value = HeroListState.OnHeroListReceived(result)
         }
     }
 
-    fun selectHero(hero: SuperHero) { // was Hero, then GetHeroesResponse
+    fun deleteHeroes5() {
+        viewModelScope.launch {
+            Log.d("Tag", "Heroes before delete: $_heroes")
+            val result = withContext(Dispatchers.IO) {
+                repository.deleteHeroes4()
+                Log.d("Tag", "Heroes after delete: $_heroes")
+            }
+
+        }
+    }
+
+    fun selectHero(hero: SuperHero) {
         _heroListState.value = HeroListState.OnHeroSelected(hero)
         _heroState.value = HeroState.OnHeroReceived(hero)
         selectedHero = hero

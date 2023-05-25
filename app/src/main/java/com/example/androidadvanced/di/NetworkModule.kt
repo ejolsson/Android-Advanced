@@ -12,7 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import kotlin.text.Typography.dagger
-
+// L4, 3.03.55
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {

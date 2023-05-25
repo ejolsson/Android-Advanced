@@ -21,4 +21,10 @@ interface SuperHeroDAO {
 
     @Delete
     suspend fun delete(user: LocalSuperHero)
+
+//    @Delete
+//    fun clearAllTables(): Unit
+
+    @Query("DELETE FROM superheroes")
+    fun deleteAll()
 }

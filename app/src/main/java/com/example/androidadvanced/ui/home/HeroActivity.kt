@@ -5,11 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.HeroActivityBinding
 import com.example.androidadvanced.ui.home.herolist.HeroListFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
+//class HeroActivity @Inject constructor(private var viewModel: HeroViewModel) : AppCompatActivity() {
 class HeroActivity : AppCompatActivity() {
     companion object {
         const val TAG_TOKEN = "TAG_TOKEN"
@@ -19,6 +24,11 @@ class HeroActivity : AppCompatActivity() {
             context.startActivity(intent) // w/o this, can't move past login
         }
     } // connects to LoginAct > onCreate > lifecycleScope.launch > when is LoginViewModel.LoginState.OnLoginReceived
+
+    //    @Inject
+//    lateinit var viewModel: HeroViewModel
+    private val viewModel: HeroViewModel by viewModels()
+
     private lateinit var binding: HeroActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,14 +44,18 @@ class HeroActivity : AppCompatActivity() {
         val testButton = findViewById<Button>(R.id.bTest)
         testButton.setOnClickListener {
             Log.d("Tag","Test button clicked")
+            deleteHeroes()
 //            Log.d("Tag", "${viewModel}")
         }
     }
     private fun presentHeroesListFragment() {
         supportFragmentManager
             .beginTransaction()
-            .replace(binding.fFragment.id, HeroListFragment()) //  TestFragment()
+            .replace(binding.fFragment.id, HeroListFragment(viewModel))
             .commitNow() // was .commitNow()
+    }
+    private fun deleteHeroes() {
+        viewModel.deleteHeroes5()
     }
     // todo: add presentHeroesDetailsFragment()
 //    fun presentHeroesDetailsFragment() {

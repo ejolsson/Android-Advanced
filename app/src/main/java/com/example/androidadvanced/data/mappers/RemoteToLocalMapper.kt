@@ -2,8 +2,9 @@ package com.example.androidadvanced.data.mappers
 
 import com.example.androidadvanced.data.local.model.LocalSuperHero
 import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import javax.inject.Inject
 
-class RemoteToLocalMapper {
+class RemoteToLocalMapper @Inject constructor() {
 
     fun mapGetHeroResponse(getHeroesResponse: List<GetHeroesResponse>): List<LocalSuperHero> {
         return getHeroesResponse.map { mapGetHeroesResponse(it) }

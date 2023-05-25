@@ -16,11 +16,14 @@ import com.example.androidadvanced.ui.home.HeroActivity
 import com.example.androidadvanced.ui.home.HeroViewModel
 import com.example.androidadvanced.ui.details.DetailsFragment
 import com.example.androidadvanced.ui.model.SuperHero
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HeroListFragment(): Fragment(), HeroAdapterCallback {
-    private lateinit var binding: HeroListFragmentBinding // not showing during runtime
-    private lateinit var viewModel: HeroViewModel
+@AndroidEntryPoint
+class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel): Fragment(), HeroAdapterCallback {
+
+    private lateinit var binding: HeroListFragmentBinding
     private var adapter = HeroCellAdapter(this)
 
     override fun onCreateView(
@@ -32,9 +35,8 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = HeroViewModel(requireContext()) // adv class puts it here
-        Log.d("Tag", "HeroListFragment onViewCreated...") // works, fragment is being called
-        configureAdapter() // issues
+//        viewModel = HeroViewModel(requireContext()) // adv class puts it here
+        configureAdapter()
         configureObservers()
         configureListeners()
         loadHeroes()
@@ -67,14 +69,14 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
         Log.d("Tag HeroListFrag", "Favorite Heroes are... TBD")
     }
     private fun configureObservers() {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.heroListState.collect {
-                    when (it) {
-                        is HeroViewModel.HeroListState.OnHeroListReceived -> {
-                            Log.d("Tag HeroListFrag", ".OnHeroListReceived")
-                            Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
-                            showHeroes(it.heroes2)
-                            // Fundamentals way of using adapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.heroListState.collect {
+                when (it) {
+                    is HeroViewModel.HeroListState.OnHeroListReceived -> {
+                        Log.d("Tag HeroListFrag", ".OnHeroListReceived")
+                        Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
+                        showHeroes(it.heroes2)
+                        // Fundamentals way of using adapter
 //                            adapter = HeroCellAdapter(
 ////                                it.heroes2, // todo: needed to pass heroes?
 //                                this@HeroListFragment
@@ -82,25 +84,25 @@ class HeroListFragment(): Fragment(), HeroAdapterCallback {
 //                            binding.rvListOfHeroes.layoutManager =
 //                                LinearLayoutManager(binding.root.context)
 //                            binding.rvListOfHeroes.adapter = adapter
-                        }
-                        is HeroViewModel.HeroListState.OnHeroSelected -> { // navigate to clicked-on hero
-                            Log.d("Tag HeroListFrag", ".OnHeroSelected")
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.fFragment, DetailsFragment(it.hero))
-                                .addToBackStack(HeroActivity::javaClass.name)
-                                .commit()
-                        }
-                        is HeroViewModel.HeroListState.OnHeroesUpdated -> {
-                            Log.d("Tag HeroListFrag", ".OnHeroesUpdated")
-                            adapter.notifyDataSetChanged()
-                        }
-                        is HeroViewModel.HeroListState.ErrorJSON ->
-                            Log.d("Tag HeroListFrag", "HeroState ErrorJSON")
-                        is HeroViewModel.HeroListState.ErrorResponse ->
-                            Log.d("Tag HeroListFrag", "HeroState ErrorResponse")
-                        is HeroViewModel.HeroListState.Idle -> Unit
                     }
+                    is HeroViewModel.HeroListState.OnHeroSelected -> { // navigate to clicked-on hero
+                        Log.d("Tag HeroListFrag", ".OnHeroSelected")
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fFragment, DetailsFragment(viewModel, it.hero))
+                            .addToBackStack(HeroActivity::javaClass.name)
+                            .commit()
+                    }
+                    is HeroViewModel.HeroListState.OnHeroesUpdated -> {
+                        Log.d("Tag HeroListFrag", ".OnHeroesUpdated")
+                        adapter.notifyDataSetChanged()
+                    }
+                    is HeroViewModel.HeroListState.ErrorJSON ->
+                        Log.d("Tag HeroListFrag", "HeroState ErrorJSON")
+                    is HeroViewModel.HeroListState.ErrorResponse ->
+                        Log.d("Tag HeroListFrag", "HeroState ErrorResponse")
+                    is HeroViewModel.HeroListState.Idle -> Unit
                 }
             }
         }
+    }
 }

@@ -16,19 +16,20 @@ import com.example.androidadvanced.ui.home.HeroViewModel
 import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsFragment(private var hero: SuperHero) : Fragment() { // was Hero
+class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, private var hero: SuperHero) : Fragment() { // was Hero
 
     private lateinit var binding: DetailsBinding
 //    private val viewModel: HeroViewModel by activityViewModels()
-    private lateinit var viewModel: HeroViewModel
+//    private lateinit var viewModel: HeroViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = HeroViewModel(requireContext()) // onViewCreated has issues, trying here.. it works!
+//        viewModel = HeroViewModel(requireContext()) // onViewCreated has issues, trying here.. it works!
         binding = DetailsBinding.inflate(inflater)
         binding.tvHeroDetailTitle.text = hero.name
         binding.tvHeroDescription.text = hero.description
