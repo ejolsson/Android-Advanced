@@ -18,7 +18,6 @@ class HeroCellAdapter( // adding
     ): RecyclerView.Adapter<HeroCellAdapter.HeroViewHolder>() {
 
     private var listHeroes = listOf<SuperHero>() // moved this parameter out of definition line to here
-    // todo: ?? How is the hero data getting here??
     class HeroViewHolder(private var binding: HeroCellBinding, private val callback: HeroAdapterCallback): RecyclerView.ViewHolder(binding.root) {
         fun showHero(hero: SuperHero) { // was Hero, then was GetHeroesResponse
 //            Log.d("Tag", "HeroCellAdapter > HeroViewHolder > showHero...")

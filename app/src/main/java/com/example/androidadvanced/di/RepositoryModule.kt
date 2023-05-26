@@ -23,5 +23,5 @@ abstract class RepositoryModule {
     abstract fun bindsLocalDataSource(localDataSourceImpl: LocalDataSourceImpl): LocalDataSource // already an interface
 
     @Binds
-    abstract fun bindsRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource // todo update RemoteDataSource to interface
+    abstract fun bindsRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
 }

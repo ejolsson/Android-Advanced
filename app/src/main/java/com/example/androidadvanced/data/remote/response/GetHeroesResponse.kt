@@ -12,8 +12,6 @@ data class GetHeroesResponse( // data model, called everywhere
     val photo: String
 )
 
-// TODO: Check to see if below GetHerosResponseOld is needed
-
 @Entity
 data class GetHerosResponseOld(
     @PrimaryKey @ColumnInfo(name = "id") @Json(name = "id") val id: String,
