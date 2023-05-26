@@ -5,7 +5,7 @@ import com.example.androidadvanced.data.remote.response.GetHeroesResponse
 // Principal mechanism to make API call
 
 interface RemoteDataSource {
-    suspend fun getHeroes2(): List<GetHeroesResponse>
+    suspend fun getHeroes2(token: String): List<GetHeroesResponse>
 //    suspend fun getHeroes2(): List<GetHeroesResponse> { // called in Repository.kt
 //        return api.getHeroes1(GetHeroesRequestBody())
 //    }

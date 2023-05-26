@@ -1,16 +1,17 @@
 package com.example.androidadvanced.ui.home.herolist
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidadvanced.R
+import com.example.androidadvanced.data.User
 import com.example.androidadvanced.databinding.HeroListFragmentBinding
 import com.example.androidadvanced.ui.home.HeroActivity
 import com.example.androidadvanced.ui.home.HeroViewModel
@@ -49,7 +50,11 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
         }
     }
     private fun loadHeroes() {
-        viewModel.getHeroes5()
+        activity?.getPreferences(Context.MODE_PRIVATE)?.let {
+            User.getToken(requireContext())?.let {token ->
+                viewModel.getHeroes5(token)
+            }
+        }
     }
     private fun showHeroes(heroes: List<SuperHero>) {
         adapter.updateList(heroes)

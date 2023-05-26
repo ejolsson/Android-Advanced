@@ -1,13 +1,11 @@
 package com.example.androidadvanced.ui.home
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidadvanced.data.Repository
-import com.example.androidadvanced.data.RepositoryImpl
 import com.example.androidadvanced.ui.model.SuperHero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,20 +22,19 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
     val heroListState: StateFlow<HeroListState> = _heroListState
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
-    lateinit var heroesLiving: List<SuperHero> // was <Hero>, then <GetHeroesResponse>
-    var selectedHero: SuperHero? = null // was Hero, then GetHeroesResponse
+    private lateinit var heroesLiving: List<SuperHero>
+    var selectedHero: SuperHero? = null
 
-//    private val repository = Repository(context)
     private val _heroes = MutableLiveData<List<SuperHero>>()
     val heroes2: LiveData<List<SuperHero>> get() = _heroes
 
-    fun getHeroes5() { // todo: add token parameter
+    fun getHeroes5(token: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
-                repository.getHeroes4()
+                Log.d("Tag", "getHeroes5 token = $token")
+                repository.getHeroes4(token)
             }
             _heroes.value = result
-//            Log.d("Tag getHeroes", _heroes.toString())
             Log.d("Tag", "HeroVM > fun getHeroes5: List<SuperHero>.first = ${result.first()}")
             _heroListState.value = HeroListState.OnHeroListReceived(result)
         }
@@ -50,7 +47,6 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
                 repository.deleteHeroes4()
                 Log.d("Tag", "Heroes after delete: $_heroes")
             }
-
         }
     }
 

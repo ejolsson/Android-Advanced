@@ -15,10 +15,11 @@ class RepositoryImpl @Inject constructor(
     private val remoteToLocalMapper: RemoteToLocalMapper
 ): Repository {
 
-    override suspend fun getHeroes4(): List<SuperHero> {
+    override suspend fun getHeroes4(token: String): List<SuperHero> {
         if (localDataSource.getHeroes3().isEmpty()) {
-            Log.w("Tag", "localDataSource.getHeroes3().isEmpty() is TRUE")
-            val remoteSuperHeroes = remoteDataSource.getHeroes2()
+            Log.w("Tag", "No heroes stored locally. Going the fetch them!")
+            Log.d("Tag", "getHeroes4 token = $token")
+            val remoteSuperHeroes = remoteDataSource.getHeroes2(token)
 
             localDataSource.insertHeroes(remoteToLocalMapper.mapGetHeroResponse(remoteSuperHeroes))
         }

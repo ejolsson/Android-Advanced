@@ -9,7 +9,7 @@ import com.example.androidadvanced.data.remote.RemoteDataSource
 import com.example.androidadvanced.ui.model.SuperHero
 
 interface Repository {
-    suspend fun getHeroes4(): List<SuperHero>
+    suspend fun getHeroes4(token: String): List<SuperHero>
     suspend fun deleteHeroes4()
 
     /*

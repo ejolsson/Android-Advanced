@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         setObservers()
         setListeners()
         if (!User.getToken(this).isNullOrBlank()) {
-            Log.w("Tag login", "Token NOT null")
+            Log.w("Tag login", "Token onhand, skip login...")
             goToHeroActivity()
         }
     }
