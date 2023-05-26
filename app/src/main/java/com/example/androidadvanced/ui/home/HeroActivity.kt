@@ -23,7 +23,11 @@ class HeroActivity : AppCompatActivity() {
             intent.putExtra(TAG_TOKEN, token)
             context.startActivity(intent) // w/o this, can't move past login
         }
-    } // connects to LoginAct > onCreate > lifecycleScope.launch > when is LoginViewModel.LoginState.OnLoginReceived
+        fun start(context: Context) {
+            val intent = Intent(context, HeroActivity::class.java)
+            context.startActivity(intent)
+        }
+    } // connects to LoginAct > onCreate > lifecycleScope.launch > when is LoginViewModel.LoginState.LoginSuccess
 
     //    @Inject
 //    lateinit var viewModel: HeroViewModel

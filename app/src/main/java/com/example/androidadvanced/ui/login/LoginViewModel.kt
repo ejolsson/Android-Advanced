@@ -63,7 +63,7 @@ class LoginViewModel : ViewModel() {
             response.body?.let { responseBody ->
                 val tokenPublic = responseBody.string()
                 Log.d("Tag LoginVM","Login tokenPublic = $tokenPublic")
-                _loginState.value= LoginState.OnLoginReceived(tokenPublic)
+                _loginState.value= LoginState.LoginSuccess(tokenPublic)
             } ?: run { _loginState.value = LoginState.Error("Something went wrong in the request") }
         }
     }
@@ -74,7 +74,7 @@ class LoginViewModel : ViewModel() {
                 repository.getLogin3(username, password)
             }
             token = result
-            _loginState.value = LoginState.OnLoginReceived(token)
+            _loginState.value = LoginState.LoginSuccess(token)
         }
     }
 
@@ -82,14 +82,14 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             val result = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
             token = result
-            _loginState.value = LoginState.OnLoginReceived(token)
+            _loginState.value = LoginState.LoginSuccess(token)
         }
     }
 
     sealed class LoginState {
         object Idle: LoginState()
         data class Error(val error: String): LoginState()
-        data class OnLoginReceived(val token: String): LoginState()
+        data class LoginSuccess(val token: String): LoginState()
         data class LoginRequested(val request: Boolean): LoginState()
     }
 }

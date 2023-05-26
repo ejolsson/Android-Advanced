@@ -17,7 +17,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getHeroes4(): List<SuperHero> {
         if (localDataSource.getHeroes3().isEmpty()) {
-            Log.d("Tag", "localDataSource.getHeroes3().isEmpty() is TRUE")
+            Log.w("Tag", "localDataSource.getHeroes3().isEmpty() is TRUE")
             val remoteSuperHeroes = remoteDataSource.getHeroes2()
 
             localDataSource.insertHeroes(remoteToLocalMapper.mapGetHeroResponse(remoteSuperHeroes))

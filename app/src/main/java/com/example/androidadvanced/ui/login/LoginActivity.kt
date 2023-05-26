@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
+import com.example.androidadvanced.data.User
 import com.example.androidadvanced.databinding.LoginBinding
 import com.example.androidadvanced.ui.home.HeroActivity
 import kotlinx.coroutines.launch
@@ -23,6 +24,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setObservers()
         setListeners()
+        if (!User.getToken(this).isNullOrBlank()) {
+            Log.w("Tag login", "Token NOT null")
+            goToHeroActivity()
+        }
+    }
+    private fun goToHeroActivity() {
+        HeroActivity.start(this@LoginActivity)
+        finish()
     }
     private fun setListeners() {
         val emailRapid = "ejolsson@gmail.com" // todo:Remove. Testing only.
@@ -46,10 +55,10 @@ class LoginActivity : AppCompatActivity() {
                     is LoginViewModel.LoginState.LoginRequested -> {
                         Log.d("Tag LoginAct", "is LoginViewModel.LoginState.LoginRequested")
                     }
-                    is LoginViewModel.LoginState.OnLoginReceived -> {
-                        Log.d("Tag LoginAct", "Login token = ${loginState.token}")
-                        Log.d("Tag", "..........................")
-                        HeroActivity.launch(this@LoginActivity, loginState.token)
+                    is LoginViewModel.LoginState.LoginSuccess -> {
+                        Log.d("Tag LoginAct", "Login token = ${loginState.token}") // token available here, prints out
+                        User.updateToken(loginState.token, this@LoginActivity)
+                        HeroActivity.launch(this@LoginActivity, loginState.token) // todo: delete? duplication of logic?
                     }
                     is LoginViewModel.LoginState.Error -> Log.d("Tag LoginAct", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit

@@ -1,6 +1,7 @@
 package com.example.androidadvanced.data
 
 import android.content.Context
+import android.util.Log
 
 class User {
     companion object {
@@ -12,6 +13,7 @@ class User {
                 putString(TAG_USER_TOKEN, newToken)
                 apply()
             }
+            Log.w("Tag token", "Token saved into SharedPreferences: $newToken")
         }
 
         fun getToken(context: Context) =

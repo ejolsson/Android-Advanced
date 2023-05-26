@@ -31,7 +31,7 @@ class LoginRemoteDataSource {
 
     suspend fun getLogin2(username: String, password: String): String {
         val credentials = okhttp3.Credentials.basic(username,password)
-        Log.d("Tag", "loginApi.getLogin1(credentials): ${loginApi.getLogin1(credentials)}")
-        return loginApi.getLogin1(credentials)
+//        Log.d("Tag", "loginApi.getLogin1(credentials): ${loginApi.getLogin1(credentials)}")
+        return loginApi.getLogin1(credentials) // good print
     }
 }
