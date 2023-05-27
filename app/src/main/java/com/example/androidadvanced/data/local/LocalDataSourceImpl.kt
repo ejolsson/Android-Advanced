@@ -20,4 +20,8 @@ class LocalDataSourceImpl @Inject constructor(private val dao: SuperHeroDAO): Lo
     override suspend fun deleteHeroes3() {
         dao.deleteAll()
     }
+
+//    override suspend fun getLocations() {
+////        dao.
+//    }
 }

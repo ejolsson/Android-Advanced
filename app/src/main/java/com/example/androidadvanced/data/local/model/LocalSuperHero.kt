@@ -10,6 +10,7 @@ data class LocalSuperHero (
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "photo") val photo: String,
-    @ColumnInfo(name = "favorite") val favorite: Boolean
-
+    @ColumnInfo(name = "favorite") val favorite: Boolean,
+//    @ColumnInfo(name = "latitude") val latitude: Double,
+//    @ColumnInfo(name = "longitude") val longitude: Double
 )

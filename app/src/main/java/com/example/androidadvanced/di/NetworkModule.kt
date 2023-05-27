@@ -1,6 +1,7 @@
 package com.example.androidadvanced.di
 
 import com.example.androidadvanced.data.remote.DragonBallApi
+import com.example.androidadvanced.data.remote.MapApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -45,5 +46,10 @@ object NetworkModule {
     @Provides
     fun providesApi(retrofit: Retrofit): DragonBallApi {
         return retrofit.create(DragonBallApi::class.java)
+    }
+
+    @Provides
+    fun providesMapApi(retrofit: Retrofit): MapApi {
+        return retrofit.create(MapApi::class.java)
     }
 }

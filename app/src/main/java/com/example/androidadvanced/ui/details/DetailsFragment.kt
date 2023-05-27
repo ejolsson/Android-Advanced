@@ -1,6 +1,7 @@
 package com.example.androidadvanced.ui.details
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
+import com.example.androidadvanced.data.User
 import com.example.androidadvanced.databinding.DetailsBinding
 import com.example.androidadvanced.ui.home.HeroViewModel
 import com.example.androidadvanced.ui.model.SuperHero
@@ -35,7 +36,8 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
         binding.tvHeroDescription.text = hero.description
         Picasso.get().load(hero.photo).into(binding.ivHeroDetailPic)
         Log.d("Tag DetailsFrag", "DetailsFrag > makeFavoriteButton ${hero.name} favorite status is: ${hero.favorite}")
-        setObservers()
+        configureObservers()
+        configureListeners()
         return binding.root
     }
 
@@ -43,17 +45,44 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        viewModel = HeroViewModel(requireContext()) // lateinit property viewModel has not been initialized
-        val makeFavoriteButton = getView()?.findViewById<Button>(R.id.bMakeFavorite)
 
-        makeFavoriteButton?.setOnClickListener {
+    }
+
+    private fun configureListeners() {
+
+//        val makeFavoriteButton = findViewById<Button>(R.id.bMakeFavorite)
+//        val mapButton = getView()?.findViewById<Button>(R.id.bShowLocations)
+//
+//        makeFavoriteButton?.setOnClickListener {
+//            viewModel.makeHeroFavorite(hero)
+//            hero.favorite = true
+//            binding.cbHeroDetail.alpha = 1.0F
+//            Log.d("Tag DetailsFrag", "${hero.name} favorite status after: ${hero.favorite}")
+//        }
+//
+//        mapButton?.setOnClickListener {
+//            loadLocations()
+//            Log.w("Tag", "Hero Locations: ")
+//        }
+
+        binding.bMakeFavorite.setOnClickListener {
             viewModel.makeHeroFavorite(hero)
-            hero.favorite = true
-            binding.cbHeroDetail.alpha = 1.0F
-            Log.d("Tag DetailsFrag", "${hero.name} favorite status after: ${hero.favorite}")
+        }
+
+        binding.bShowLocations.setOnClickListener {
+            loadLocations()
+            Log.w("Tag", "Hero Locations: ")
         }
     }
 
-    private fun setObservers() {
+    private fun loadLocations() {
+        activity?.getPreferences(Context.MODE_PRIVATE)?.let {
+            User.getToken(requireContext())?.let { token ->
+                viewModel.getLocations5(token)
+            }
+        }
+    }
+    private fun configureObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.heroState.collect {
                 when (it) {
@@ -62,7 +91,6 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
                     }
                     is HeroViewModel.HeroState.HeroLifeZero -> {
                         Log.d("Tag DetailsFrag", ".HeroLifeZero")
-//                        Log.w("Tag DetailsFrag", "Shared ViewModel > getHeroes() > heroesLiving = ${viewModel.heroesLiving}")
                         activity?.supportFragmentManager?.popBackStack()
                     }
                     is HeroViewModel.HeroState.Idle -> Unit

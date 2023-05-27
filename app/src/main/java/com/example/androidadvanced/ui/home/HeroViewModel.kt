@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidadvanced.data.RepositoryLocations
 import com.example.androidadvanced.data.Repository
 import com.example.androidadvanced.ui.model.SuperHero
+import com.example.androidadvanced.ui.model.SuperHeroLocations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,17 +18,21 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroViewModel @Inject constructor(private val repository: Repository): ViewModel() { // removed , context: Context fm injection
+class HeroViewModel @Inject constructor(private val repository: Repository, private val repositoryLocations: RepositoryLocations): ViewModel() { // removed , context: Context fm injection
 
     private val _heroListState = MutableStateFlow<HeroListState>(HeroListState.Idle)
     val heroListState: StateFlow<HeroListState> = _heroListState
+
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
+
     private lateinit var heroesLiving: List<SuperHero>
     var selectedHero: SuperHero? = null
 
     private val _heroes = MutableLiveData<List<SuperHero>>()
     val heroes2: LiveData<List<SuperHero>> get() = _heroes
+
+    private val _locations = MutableLiveData<List<SuperHeroLocations>>()
 
     fun getHeroes5(token: String) {
         viewModelScope.launch {
@@ -40,6 +46,21 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
         }
     }
 
+    fun getLocations5(token: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                Log.d("Tag", "getLocations5 token = $token")
+                repositoryLocations.getLocations4(token)
+            }
+            _locations.value = result
+
+            Log.d("Tag", "HeroVM > fun getLocations5: List<SuperHeroLocations>.first = ${result.first()}")
+
+            Log.d("Tag", "HeroVM > fun getLocations5: List<SuperHeroLocations> = $result")
+
+            _heroListState.value = HeroListState.OnHeroLocationReceived(result)
+        }
+    }
     fun deleteHeroes5() {
         viewModelScope.launch {
             Log.d("Tag", "Heroes before delete: $_heroes")
@@ -77,6 +98,7 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
         object Idle: HeroListState()
 //        data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
         data class OnHeroListReceived(val heroes2: List<SuperHero>): HeroListState() // was <Hero>, then GetHeroesResponse
+        data class OnHeroLocationReceived(val heroLocation: List<SuperHeroLocations>): HeroListState()
         data class OnHeroSelected(val hero: SuperHero): HeroListState() // was Hero, then GetHeroesResponse
 
         object OnHeroesUpdated: HeroListState()

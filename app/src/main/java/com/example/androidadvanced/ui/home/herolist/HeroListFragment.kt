@@ -68,7 +68,6 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
         viewModel.selectHero(hero)
     }
     private fun configureListeners() {
-        // todo: add favorite button
         Log.d("Tag HeroListFrag", "Favorite Heroes are... TBD")
     }
     private fun configureObservers() {
@@ -79,14 +78,6 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
                         Log.d("Tag HeroListFrag", ".OnHeroListReceived")
                         Log.d("Tag HeroListFrag", "HeroListFrag > onViewCreated > List<SuperHeroes> = ${it.heroes2.first()}") // print successful
                         showHeroes(it.heroes2)
-                        // Fundamentals way of using adapter
-//                            adapter = HeroCellAdapter(
-////                                it.heroes2, // todo: needed to pass heroes?
-//                                this@HeroListFragment
-//                            ) // removed life filter, toggle heroes & heroes2
-//                            binding.rvListOfHeroes.layoutManager =
-//                                LinearLayoutManager(binding.root.context)
-//                            binding.rvListOfHeroes.adapter = adapter
                     }
                     is HeroViewModel.HeroListState.OnHeroSelected -> { // navigate to clicked-on hero
                         Log.d("Tag HeroListFrag", ".OnHeroSelected")
@@ -94,6 +85,9 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
                             .replace(R.id.fFragment, DetailsFragment(viewModel, it.hero))
                             .addToBackStack(HeroActivity::javaClass.name)
                             .commit()
+                    }
+                    is HeroViewModel.HeroListState.OnHeroLocationReceived -> {
+                        Log.w("Tag HeroListFrag", ".OnHeroListReceived")
                     }
                     is HeroViewModel.HeroListState.OnHeroesUpdated -> {
                         Log.d("Tag HeroListFrag", ".OnHeroesUpdated")

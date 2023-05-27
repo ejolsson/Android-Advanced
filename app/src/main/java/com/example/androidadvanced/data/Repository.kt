@@ -7,12 +7,16 @@ import com.example.androidadvanced.data.mappers.LocalToPresentationMapper
 import com.example.androidadvanced.data.mappers.RemoteToLocalMapper
 import com.example.androidadvanced.data.remote.RemoteDataSource
 import com.example.androidadvanced.ui.model.SuperHero
+import com.example.androidadvanced.ui.model.SuperHeroLocations
 
 interface Repository {
     suspend fun getHeroes4(token: String): List<SuperHero>
     suspend fun deleteHeroes4()
 
-    /*
+//    suspend fun getLocations4(token: String): List<SuperHeroLocations>
+}
+
+/*
     class Repository(context: Context) {
 
     private val remoteDataSource = RemoteDataSource()
@@ -32,4 +36,3 @@ interface Repository {
     } // called in SharedVM
 
      */
-}

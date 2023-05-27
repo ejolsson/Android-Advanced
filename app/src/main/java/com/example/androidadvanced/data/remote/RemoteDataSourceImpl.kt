@@ -3,6 +3,7 @@ package com.example.androidadvanced.data.remote
 import android.util.Log
 import com.example.androidadvanced.data.remote.request.GetHeroesRequestBody
 import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import com.example.androidadvanced.data.remote.response.GetLocationsResponse
 import javax.inject.Inject
 
 // L6 intro
