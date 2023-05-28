@@ -2,9 +2,7 @@ package com.example.androidadvanced.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.androidadvanced.data.local.SuperHeroDAO
 import com.example.androidadvanced.data.local.SuperHeroDAOLocations
-import com.example.androidadvanced.data.local.SuperHeroDatabase
 import com.example.androidadvanced.data.local.SuperHeroDatabaseLocations
 import dagger.Module
 import dagger.Provides
@@ -15,7 +13,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object LocalModuleLocations {
-
     @Provides
     fun providesSuperheroDatabaseLocations(@ApplicationContext context: Context): SuperHeroDatabaseLocations {
         val db = Room.databaseBuilder(
@@ -30,5 +27,4 @@ object LocalModuleLocations {
         val dao = db.superHeroDaoLocations()
         return dao
     }
-
 }

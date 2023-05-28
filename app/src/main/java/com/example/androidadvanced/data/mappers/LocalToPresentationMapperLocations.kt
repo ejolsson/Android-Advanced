@@ -1,8 +1,6 @@
 package com.example.androidadvanced.data.mappers
 
-import com.example.androidadvanced.data.local.model.LocalSuperHero
 import com.example.androidadvanced.data.local.model.LocalSuperHeroLocations
-import com.example.androidadvanced.ui.model.SuperHero
 import com.example.androidadvanced.ui.model.SuperHeroLocations
 import javax.inject.Inject
 

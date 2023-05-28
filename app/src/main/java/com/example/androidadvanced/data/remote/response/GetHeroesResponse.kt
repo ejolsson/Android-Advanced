@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
-data class GetHeroesResponse( // data model, called everywhere
+data class GetHeroesResponse(
     val name: String,
     val id: String,
     val description: String,

@@ -11,7 +11,6 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-// L4 3.28.32, L5 no chg, L6
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {

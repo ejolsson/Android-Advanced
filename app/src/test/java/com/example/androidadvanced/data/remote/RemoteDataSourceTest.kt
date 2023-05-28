@@ -8,41 +8,40 @@ import org.junit.Test
 class RemoteDataSourceTest : BaseNetworkMockTest() {
 
     // UUT o SUT Unit Under Test o System Under Test
+    val token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
+    @Test
+    fun nameTest() = runTest {
+
+        // Given
+        val getHeroesRequestBody = GetHeroesRequestBody("Thor")
+
+        // Then
+        assert(getHeroesRequestBody.name == "Thor")
+    } // pass
 
     @Test
     fun myTest() = runTest {
         // Given
-        val remoteDataSource = RemoteDataSource2(api)
+        val remoteDataSource = RemoteDataSourceImpl(api)
 
         // When
-        val actual = remoteDataSource.getHeroes()
+        val actual = remoteDataSource.getHeroes2(token)
 
         // Then
         assert(actual[0].name == "Broly")
-    }
+    } // pass
 
 
     @Test
-    fun `WHEN requesting getHeros EXPECT successful response AND 3 heros starting by B`() = runTest {
+    fun `WHEN requesting getHeroes EXPECT successful response AND 3 heroes starting by B`() = runTest {
         // Given
-        val remoteDataSource = RemoteDataSource2(api)
+        val remoteDataSource = RemoteDataSourceImpl(api)
 
         // When
-        val actual = remoteDataSource.getHeroes()
+        val actual = remoteDataSource.getHeroes3(token)
 
         // Then
         assert(actual.size == 3)
-    }
+    } // pass
 
-
-    @Test
-    fun myTest3() = runTest {
-        // Given
-        val getHerosRequestBody = GetHeroesRequestBody("Juan")
-
-        // When
-
-        // Then
-        assert(getHerosRequestBody.name == "Juan")
-    }
 }

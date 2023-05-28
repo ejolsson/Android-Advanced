@@ -10,7 +10,7 @@
         android:id="@+id/navigation_bar_item_large_label_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/fFragment"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,10 +21,10 @@
 
         <TextView
             android:id="@+id/heroListTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:layout_weight="2"
             android:text="Dragon Ballz"
             android:textAlignment="center"
@@ -32,12 +32,6 @@
             android:textSize="32sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/bTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/test" />
     </LinearLayout>
 
     <FrameLayout

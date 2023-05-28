@@ -5,7 +5,6 @@ import com.example.androidadvanced.data.remote.request.GetLocationsRequestBody
 import com.example.androidadvanced.data.remote.response.GetLocationsResponse
 import javax.inject.Inject
 
-
 class RemoteDataSourceImplLocations @Inject constructor(private val api: MapApi):
     RemoteDataSourceLocations {
 

@@ -9,29 +9,25 @@ import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 
 interface HeroAdapterCallback {
-    // this input param to class HeroListFragment @Inject constructor (pri val VM: HeroVM): Fragm(), HeroAdapterCallback {
-    fun heroSelectionClicked(hero: SuperHero) // was Hero, then GetHeroResponse (worked then)
+    fun heroSelectionClicked(hero: SuperHero)
 }
 
-class HeroCellAdapter( // adding
-//    private val listHeroes: List<SuperHero>, // was <Hero>
-    private val callback: HeroAdapterCallback, // this callback takes SuperHero from
+class HeroCellAdapter(
+    private val callback: HeroAdapterCallback,
     ): RecyclerView.Adapter<HeroCellAdapter.HeroViewHolder>() {
 
-    private var listHeroes = listOf<SuperHero>() // moved this parameter out of definition line to here
+    private var listHeroes = listOf<SuperHero>()
     class HeroViewHolder(private var binding: HeroCellBinding, private val callback: HeroAdapterCallback): RecyclerView.ViewHolder(binding.root) {
-        fun showHero(hero: SuperHero) { // was Hero, then was GetHeroesResponse
-//            Log.d("Tag", "HeroCellAdapter > HeroViewHolder > showHero...")
-//            Log.d("Tag", "SuperHero name = $hero.name")
+        fun showHero(hero: SuperHero) {
             binding.tvHeroNameCell.text = hero.name
-            Picasso.get().load(hero.photo).into(binding.ivHeroThumb) // todo: use another tool other than Picasso?
+            Picasso.get().load(hero.photo).into(binding.ivHeroThumb)
             if (hero.favorite) {
                 Log.d("Tag", "${hero.name} is a favorite")
                 binding.star.isChecked
                 binding.star.alpha = 1.0F
             }
-            binding.lLHeroCell.setOnClickListener { // makes table cell clickable
-                callback.heroSelectionClicked(hero)  // calls fun w given hero
+            binding.lLHeroCell.setOnClickListener {
+                callback.heroSelectionClicked(hero)
             }
         }
     }
@@ -41,7 +37,6 @@ class HeroCellAdapter( // adding
             parent,
             false
         )
-//        Log.d("Tag", "HeroCellAdapter > onCreateViewHolder...")
         return HeroViewHolder(binding, callback)
     }
     override fun getItemCount(): Int {

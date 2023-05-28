@@ -23,7 +23,6 @@ class RepositoryImpl @Inject constructor(
 
             localDataSource.insertHeroes(remoteToLocalMapper.mapGetHeroResponse(remoteSuperHeroes))
         }
-
         return localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3())
     }
 

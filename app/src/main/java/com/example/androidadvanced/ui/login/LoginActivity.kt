@@ -34,17 +34,13 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
     private fun setListeners() {
-        val emailRapid = "ejolsson@gmail.com" // todo:Remove. Testing only.
-        val passwordRapid = "vamosRafa2023!" // todo:Remove. Testing only.
 
         val email = findViewById<EditText>(R.id.etEmail)
         val password = findViewById<EditText>(R.id.etPassword)
         val loginButton = findViewById<Button>(R.id.bLogin)
 
         loginButton.setOnClickListener {
-//            viewModel.userLogin("${email.text}","${password.text}")
-//            viewModel.userLogin(emailRapid,passwordRapid)
-            viewModel.userLogin4(emailRapid, passwordRapid)
+            viewModel.userLogin4("${email.text}","${password.text}")
 //            viewModel.skipLogin()
         }
     }

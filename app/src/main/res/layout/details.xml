@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
     android:layout_gravity="center"
-    android:layout_margin="16dp"
+    android:layout_margin="8dp"
     android:orientation="vertical"
     >
 
@@ -78,7 +78,7 @@
                 style="@style/Base.Theme.AndroidAdvanced"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:layout_gravity="center"
                 app:layout_constraintBottom_toTopOf="@id/bMakeFavorite"
@@ -92,7 +92,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivHeroDetailPic"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="213dp"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/avatars[0]" />
             </com.google.android.material.card.MaterialCardView>

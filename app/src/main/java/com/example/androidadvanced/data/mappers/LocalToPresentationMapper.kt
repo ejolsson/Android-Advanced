@@ -10,7 +10,7 @@ class LocalToPresentationMapper @Inject constructor() {
         return localSuperHeroes.map { mapLocalSuperHero(it) }
     }
 
-    private fun mapLocalSuperHero(getHeroesResponse: LocalSuperHero): SuperHero { // wasn't private before
+    private fun mapLocalSuperHero(getHeroesResponse: LocalSuperHero): SuperHero {
         return SuperHero(
             getHeroesResponse.id,
             getHeroesResponse.name,

@@ -14,7 +14,6 @@ class RepositoryImplLocations @Inject constructor(
     private val localToPresentationMapperLocations: LocalToPresentationMapperLocations,
     private val remoteToLocalMapperLocations: RemoteToLocalMapperLocations
 ): RepositoryLocations {
-
     override suspend fun getLocations4(token: String): List<SuperHeroLocations> {
         if (localDataSourceLocations.getLocations3().isEmpty()) {
             Log.w("Tag", "No locations stored locally. Going the fetch them!")
@@ -23,7 +22,6 @@ class RepositoryImplLocations @Inject constructor(
 
             localDataSourceLocations.insertLocations(remoteToLocalMapperLocations.mapGetLocationsResponse(remoteSuperHeroesLocations))
         }
-
         return localToPresentationMapperLocations.mapLocalSuperHeroLocations(localDataSourceLocations.getLocations3())
     }
 

@@ -12,8 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import kotlin.text.Typography.dagger
-// L4, 3.03.55
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -24,7 +23,6 @@ object NetworkModule {
             .addLast(KotlinJsonAdapterFactory())
             .build()
     }
-
     @Provides
     fun providesOkhttp(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -32,7 +30,6 @@ object NetworkModule {
                 level = HttpLoggingInterceptor.Level.BODY
             }).build()
     }
-
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
 
@@ -42,12 +39,10 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
-
     @Provides
     fun providesApi(retrofit: Retrofit): DragonBallApi {
         return retrofit.create(DragonBallApi::class.java)
     }
-
     @Provides
     fun providesMapApi(retrofit: Retrofit): MapApi {
         return retrofit.create(MapApi::class.java)

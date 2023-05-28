@@ -1,7 +1,5 @@
 package com.example.androidadvanced.data.remote
 
-import android.util.Log
-import com.example.androidadvanced.data.remote.response.GetLoginResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -31,7 +29,6 @@ class LoginRemoteDataSource {
 
     suspend fun getLogin2(username: String, password: String): String {
         val credentials = okhttp3.Credentials.basic(username,password)
-//        Log.d("Tag", "loginApi.getLogin1(credentials): ${loginApi.getLogin1(credentials)}")
-        return loginApi.getLogin1(credentials) // good print
+        return loginApi.getLogin1(credentials)
     }
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.room.InvalidationTracker
 import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 

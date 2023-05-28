@@ -11,11 +11,9 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-// Copied from RepositoryModule
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModuleLocations {
-
     @Binds
     abstract fun bindsRepositoryLocations(repositoryImplLocations: RepositoryImplLocations): RepositoryLocations
 

@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.androidadvanced.data.local.model.LocalSuperHero
-// L3, 21:39:34
+
 @Dao
 interface SuperHeroDAO {
 
@@ -21,9 +21,6 @@ interface SuperHeroDAO {
 
     @Delete
     suspend fun delete(user: LocalSuperHero)
-
-//    @Delete
-//    fun clearAllTables(): Unit
 
     @Query("DELETE FROM superheroes")
     fun deleteAll()

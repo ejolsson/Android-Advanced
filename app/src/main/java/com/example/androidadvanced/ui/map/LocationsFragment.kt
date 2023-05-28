@@ -42,7 +42,7 @@ import javax.inject.Inject
 class LocationsFragment: Fragment(R.layout.map), OnMapReadyCallback {
 
     private val binding: MapBinding by viewBinding(MapBinding::bind) // viewBinding imported fm Fragment ViewBindingDelegate.kt
-    private val viewModel: HeroViewModel by activityViewModels()
+    private val viewModel: MapViewModel by activityViewModels() // was HeroViewModel
 //    private val args: LocationsFragmentArgs by navArgs() // L5.. use DetailFragmentArgs?
 
     private lateinit var map: GoogleMap
@@ -57,7 +57,10 @@ class LocationsFragment: Fragment(R.layout.map), OnMapReadyCallback {
 //        binding.tvHeroNameMap.text = args.superheroId // todo update
 
         binding.bShowLocations.setOnClickListener {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.0, -3.6), 20.0F))
+            Log.w("Tag", "binding.bShowLocations.setOnClickListener...")
+//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.0, -3.6), 20.0F))
+
+            loadLocations()
 
             if (checkPermission()) {
                 showLocation()
@@ -127,7 +130,7 @@ class LocationsFragment: Fragment(R.layout.map), OnMapReadyCallback {
         val madrid = LatLng(40.0, -3.6)
         map.addMarker(
             MarkerOptions()
-                .position(sydney)
+                .position(madrid)
         )
 //        map.addPolyline(PolylineOptions().addAll(listOf(sydney, madrid)).color(Color.BLUE).width(100F))
 //        map.setOnMarkerClickListener {
@@ -135,18 +138,18 @@ class LocationsFragment: Fragment(R.layout.map), OnMapReadyCallback {
 //            binding.customMarker.isVisible = true
 //            true
 //        }
-        map.addCircle(CircleOptions().center(sydney).radius(10.0).fillColor(Color.BLACK))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        map.addCircle(CircleOptions().center(madrid).radius(10.0).fillColor(Color.BLACK))
+        map.moveCamera(CameraUpdateFactory.newLatLng(madrid))
     }
 
     private fun configureObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.mapState.collect {
                 when (it) {
-                    is HeroViewModel.MapState.OnHeroLocationReceived -> {
+                    is MapViewModel.MapState.OnHeroLocationReceived -> {
                         Log.d("Tag LocationsFragment", ".OnHeroLocationReceived")
                     }
-                    is HeroViewModel.MapState.Idle -> Unit
+                    is MapViewModel.MapState.Idle -> Unit
                 }
             }
         }
@@ -155,6 +158,7 @@ class LocationsFragment: Fragment(R.layout.map), OnMapReadyCallback {
     private fun loadLocations() {
         // todo: use _heroState to nav to locationsFragment
         activity?.getPreferences(Context.MODE_PRIVATE)?.let {
+            Log.w("Tag", "loadLocations...")
             User.getToken(requireContext())?.let { token ->
                 viewModel.getLocations5(token)
             }
