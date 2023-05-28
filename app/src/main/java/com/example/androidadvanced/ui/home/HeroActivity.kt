@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.R
 import com.example.androidadvanced.databinding.HeroActivityBinding
 import com.example.androidadvanced.ui.home.herolist.HeroListFragment
+import com.example.androidadvanced.ui.map.LocationsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class HeroActivity : AppCompatActivity() {
             intent.putExtra(TAG_TOKEN, token)
             context.startActivity(intent) // w/o this, can't move past login
         }
-        fun start(context: Context) {
+        fun start(context: Context) { // this one used
             val intent = Intent(context, HeroActivity::class.java)
             context.startActivity(intent)
         }
@@ -39,11 +40,7 @@ class HeroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HeroActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presentHeroesListFragment()
-//        intent.extras?.getString(TAG_TOKEN, "")?.let { token ->
-//            sharedViewModel.fetchHeroes(token) // v1 API call // has been commented out
-//            sharedViewModel.getHeroes() // v2 API call, hero list now rendering, todo: add token parameter // todo: remove or move to Fragment
-//        }
+        presentHeroesListFragment() // shows fragment
 
         val testButton = findViewById<Button>(R.id.bTest)
         testButton.setOnClickListener {
@@ -56,6 +53,7 @@ class HeroActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(binding.fFragment.id, HeroListFragment(viewModel))
+            // No .addToBackStack... don't want to go back to login pg...
             .commitNow() // was .commitNow()
     }
     private fun deleteHeroes() {
@@ -69,4 +67,13 @@ class HeroActivity : AppCompatActivity() {
 //            .addToBackStack(null)
 //            .commit()
 //    }
+
+    fun presentLocationsFragment() { // #1
+        Log.d("Tag HeroAct", "#1 presentLocationsFragment") // gtg
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.fFragment.id, LocationsFragment())
+//            .addToBackStack(HeroActivity::javaClass.name)
+            .commitNow()
+    }
 }

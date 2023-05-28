@@ -1,27 +1,42 @@
 package com.example.androidadvanced.ui.details
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.androidadvanced.R
 import com.example.androidadvanced.data.User
 import com.example.androidadvanced.databinding.DetailsBinding
+import com.example.androidadvanced.databinding.HeroActivityBinding
+import com.example.androidadvanced.ui.home.HeroActivity
 import com.example.androidadvanced.ui.home.HeroViewModel
+import com.example.androidadvanced.ui.home.herolist.HeroListFragment
+import com.example.androidadvanced.ui.map.LocationsFragment
 import com.example.androidadvanced.ui.model.SuperHero
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
+import java.security.AccessController.checkPermission
 import javax.inject.Inject
 
-class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, private var hero: SuperHero) : Fragment() { // was Hero
+class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, private var hero: SuperHero) : Fragment() { // tried to add private val heroActivityBinding: HeroActivityBinding
 
     private lateinit var binding: DetailsBinding
+//    private lateinit var heroActivityBinding: HeroActivityBinding // produces error: lateinit property heroActivityBinding has not been initialized
 //    private val viewModel: HeroViewModel by activityViewModels()
 //    private lateinit var viewModel: HeroViewModel
 
@@ -50,50 +65,33 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
 
     private fun configureListeners() {
 
-//        val makeFavoriteButton = findViewById<Button>(R.id.bMakeFavorite)
-//        val mapButton = getView()?.findViewById<Button>(R.id.bShowLocations)
-//
-//        makeFavoriteButton?.setOnClickListener {
-//            viewModel.makeHeroFavorite(hero)
-//            hero.favorite = true
-//            binding.cbHeroDetail.alpha = 1.0F
-//            Log.d("Tag DetailsFrag", "${hero.name} favorite status after: ${hero.favorite}")
-//        }
-//
-//        mapButton?.setOnClickListener {
-//            loadLocations()
-//            Log.w("Tag", "Hero Locations: ")
-//        }
-
         binding.bMakeFavorite.setOnClickListener {
             viewModel.makeHeroFavorite(hero)
         }
 
-        binding.bShowLocations.setOnClickListener {
-            loadLocations()
-            Log.w("Tag", "Hero Locations: ")
+        binding.bShowLocations.setOnClickListener { // #6 of 6
+            Log.d("Tag", "#6 Map button pressed") // prints ok
+            viewModel.goToMapPage(hero) // takes hero: SuperHero param of DetailsFragment
         }
     }
-
-    private fun loadLocations() {
-        activity?.getPreferences(Context.MODE_PRIVATE)?.let {
-            User.getToken(requireContext())?.let { token ->
-                viewModel.getLocations5(token)
-            }
-        }
+    private fun goToLocationsFragment() { // #2
+        Log.d("Tag DetailsFrag", "#2 goToLocationsFragment") // gtg
+        (activity as? HeroActivity)?.presentLocationsFragment()
     }
     private fun configureObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.heroState.collect {
-                when (it) {
-                    is HeroViewModel.HeroState.OnHeroReceived -> {
-                        Log.d("Tag DetailsFrag", ".OnHeroReceived")
+            viewModel.detailState.collect { detailState ->
+                when (detailState) {
+                    // 4
+                    is HeroViewModel.DetailState.OnMapSelected -> { // #3
+                        Log.d("Tag DetailsFrag", "#3 .OnMapSelected") // gtg
+                        goToLocationsFragment()
+//                        parentFragmentManager.beginTransaction()
+//                            .replace(R.id.fFragment, LocationsFragment()) //
+//                            .addToBackStack(HeroActivity::javaClass.name)
+//                            .commit()
                     }
-                    is HeroViewModel.HeroState.HeroLifeZero -> {
-                        Log.d("Tag DetailsFrag", ".HeroLifeZero")
-                        activity?.supportFragmentManager?.popBackStack()
-                    }
-                    is HeroViewModel.HeroState.Idle -> Unit
+                    is HeroViewModel.DetailState.Idle -> Unit
                 }
             }
         }

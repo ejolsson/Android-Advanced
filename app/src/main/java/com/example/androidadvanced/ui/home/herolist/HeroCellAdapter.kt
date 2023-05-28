@@ -9,6 +9,7 @@ import com.example.androidadvanced.ui.model.SuperHero
 import com.squareup.picasso.Picasso
 
 interface HeroAdapterCallback {
+    // this input param to class HeroListFragment @Inject constructor (pri val VM: HeroVM): Fragm(), HeroAdapterCallback {
     fun heroSelectionClicked(hero: SuperHero) // was Hero, then GetHeroResponse (worked then)
 }
 
@@ -29,8 +30,8 @@ class HeroCellAdapter( // adding
                 binding.star.isChecked
                 binding.star.alpha = 1.0F
             }
-            binding.lLHeroCell.setOnClickListener {
-                callback.heroSelectionClicked(hero)
+            binding.lLHeroCell.setOnClickListener { // makes table cell clickable
+                callback.heroSelectionClicked(hero)  // calls fun w given hero
             }
         }
     }

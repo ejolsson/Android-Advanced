@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     is LoginViewModel.LoginState.LoginSuccess -> {
                         Log.d("Tag LoginAct", "Login token = ${loginState.token}") // token available here, prints out
                         User.updateToken(loginState.token, this@LoginActivity)
-                        HeroActivity.launch(this@LoginActivity, loginState.token) // todo: delete? duplication of logic?
+                        HeroActivity.launch(this@LoginActivity, loginState.token) // navs to HeroList
                     }
                     is LoginViewModel.LoginState.Error -> Log.d("Tag LoginAct", "Login error")
                     is LoginViewModel.LoginState.Idle -> Unit

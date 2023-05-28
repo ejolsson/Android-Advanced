@@ -26,6 +26,12 @@ class HeroViewModel @Inject constructor(private val repository: Repository, priv
     private val _heroState = MutableStateFlow<HeroState>(HeroState.Idle)
     val heroState: StateFlow<HeroState> = _heroState
 
+    private val _detailState = MutableStateFlow<DetailState>(DetailState.Idle)
+    val detailState: StateFlow<DetailState> = _detailState
+
+    private val _mapState = MutableStateFlow<MapState>(MapState.Idle)
+    val mapState: StateFlow<MapState> = _mapState
+
     private lateinit var heroesLiving: List<SuperHero>
     var selectedHero: SuperHero? = null
 
@@ -58,7 +64,7 @@ class HeroViewModel @Inject constructor(private val repository: Repository, priv
 
             Log.d("Tag", "HeroVM > fun getLocations5: List<SuperHeroLocations> = $result")
 
-            _heroListState.value = HeroListState.OnHeroLocationReceived(result)
+//            _heroListState.value = HeroListState.OnHeroLocationReceived(result) // OnHeroLocationReceived went away..
         }
     }
     fun deleteHeroes5() {
@@ -77,16 +83,16 @@ class HeroViewModel @Inject constructor(private val repository: Repository, priv
         selectedHero = hero
     }
 
-    fun returnToHeroList() {
-        Log.d("Tag HeroVM", "fun returnToHeroList()...")
-        selectedHero?.let { hero ->
-            _heroState.value = HeroState.HeroLifeZero(hero)
-            heroesLiving.firstOrNull {it.name == hero.name}?.let {
-                // TODO: create a transition back to HeroesList
-                Log.d("Tag HeroVM", "Hi, need to create a transition back to HeroesList")
-            }
-        }
-    }
+//    fun returnToHeroList() {
+//        Log.d("Tag HeroVM", "fun returnToHeroList()...")
+//        selectedHero?.let { hero ->
+//            _heroState.value = HeroState.HeroLifeZero(hero)
+//            heroesLiving.firstOrNull {it.name == hero.name}?.let {
+//                // TODO: create a transition back to HeroesList
+//                Log.d("Tag HeroVM", "Hi, need to create a transition back to HeroesList")
+//            }
+//        }
+//    }
 
     fun makeHeroFavorite(hero: SuperHero) {
         Log.d("Tag HeroVM", "fun makeHeroFavorite()...")
@@ -94,20 +100,49 @@ class HeroViewModel @Inject constructor(private val repository: Repository, priv
         hero.favorite = true
     }
 
+    fun goToMapPage(hero: SuperHero) { // #5
+        Log.d("Tag", "#5 goToMapPage") // prints ok
+        Log.d("Tag", "goToMapPage ${hero.name}")
+        _detailState.value = DetailState.OnMapSelected(hero)
+    }
+
     sealed class HeroListState {
-        object Idle: HeroListState()
-//        data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
+        // 1
         data class OnHeroListReceived(val heroes2: List<SuperHero>): HeroListState() // was <Hero>, then GetHeroesResponse
-        data class OnHeroLocationReceived(val heroLocation: List<SuperHeroLocations>): HeroListState()
+//      data class OnHeroListReceived(val heroes: List<Hero>): HeroListState()
+//      data class OnHeroLocationReceived(val heroLocation: List<SuperHeroLocations>): HeroListState()
+
+        // 2
         data class OnHeroSelected(val hero: SuperHero): HeroListState() // was Hero, then GetHeroesResponse
 
+        // 3
         object OnHeroesUpdated: HeroListState()
+
+//        // 4 moved to detailState
+//        data class OnMapSelected(val hero: SuperHero): HeroListState() // #4
+
+        // 5
         data class ErrorJSON(val error: String): HeroListState()
+
+        // 6
         data class ErrorResponse(val error: String): HeroListState()
+
+        // 7
+        object Idle: HeroListState()
+    }
+    sealed class DetailState {
+        // 4
+        data class OnMapSelected(val hero: SuperHero): DetailState() // #4
+        object Idle: DetailState()
     }
     sealed class HeroState {
         object Idle: HeroState()
         data class OnHeroReceived(val hero: SuperHero): HeroState() // was Hero, then GetHeroesResponse
-        data class HeroLifeZero(val hero: SuperHero): HeroState() // was Hero, then GetHeroesResponse
+//        data class HeroLifeZero(val hero: SuperHero): HeroState() // was Hero, then GetHeroesResponse
+//        object OnMapButtonPressed: HeroState()
+    }
+    sealed class MapState {
+        data class OnHeroLocationReceived(val heroLocations: List<SuperHeroLocations>): MapState()
+        object Idle: MapState()
     }
 }
