@@ -8,9 +8,11 @@ import javax.inject.Inject
 class RemoteDataSourceImplLocations @Inject constructor(private val api: MapApi):
     RemoteDataSourceLocations {
 
-    override suspend fun getLocations2(token: String): List<GetLocationsResponse> {
+    override suspend fun getLocations2(token: String, id: String): List<GetLocationsResponse> {
         Log.d("Tag", "getLocations2 token = $token")
         val tokenBear = "Bearer $token"
-        return api.getLocations1(tokenBear, GetLocationsRequestBody())
+        lateinit var bodyX: GetLocationsRequestBody
+        bodyX.id = id
+        return api.getLocations1(tokenBear, bodyX)
     }
 }

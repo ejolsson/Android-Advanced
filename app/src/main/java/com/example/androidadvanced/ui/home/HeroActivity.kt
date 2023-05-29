@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.androidadvanced.databinding.HeroActivityBinding
 import com.example.androidadvanced.ui.home.herolist.HeroListFragment
 import com.example.androidadvanced.ui.map.LocationsFragment
+import com.example.androidadvanced.ui.model.SuperHero
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,11 +48,11 @@ class HeroActivity : AppCompatActivity() {
         viewModel.deleteHeroes5()
     }
 
-    fun presentLocationsFragment() {
+    fun presentLocationsFragment(hero: SuperHero) {
         Log.d("Tag HeroAct", "#1 presentLocationsFragment")
         supportFragmentManager
             .beginTransaction()
-            .replace(binding.fFragment.id, LocationsFragment())
+            .replace(binding.fFragment.id, LocationsFragment(hero))
 //            .addToBackStack(HeroActivity::javaClass.name)
             .commitNow()
     }

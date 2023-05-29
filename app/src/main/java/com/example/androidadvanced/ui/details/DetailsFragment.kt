@@ -50,8 +50,8 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
             viewModel.goToMapPage(hero)
         }
     }
-    private fun goToLocationsFragment() {
-        (activity as? HeroActivity)?.presentLocationsFragment()
+    private fun goToLocationsFragment(hero: SuperHero) {
+        (activity as? HeroActivity)?.presentLocationsFragment(hero)
     }
     private fun configureObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -59,7 +59,7 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
                 when (detailState) {
                     // 4
                     is HeroViewModel.DetailState.OnMapSelected -> {
-                        goToLocationsFragment()
+                        goToLocationsFragment(hero)
                     }
                     is HeroViewModel.DetailState.Idle -> Unit
                 }
