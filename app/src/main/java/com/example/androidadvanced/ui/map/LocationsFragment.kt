@@ -30,13 +30,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 //import java.security.AccessController.checkPermission // suspect causing an error with "checkPermission()"
 
-class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), OnMapReadyCallback {
+class LocationsFragment (private var hero: SuperHero, private var heroLocations: List<SuperHeroLocations>): Fragment(R.layout.map), OnMapReadyCallback {
 // todo @Inject constructor(private val hero: SuperHero, private val heroLocations: List<SuperHeroLocations>)
     private val binding: MapBinding by viewBinding(MapBinding::bind) // viewBinding imported fm Fragment ViewBindingDelegate.kt
 //    private lateinit var binding: MapBinding
     private val viewModel: MapViewModel by activityViewModels() // was HeroViewModel
 //    private val args: LocationsFragmentArgs by navArgs() // L5.. use DetailFragmentArgs?
-    private var heroLocations = listOf<SuperHeroLocations>()
+//    private var heroLocations = listOf<SuperHeroLocations>()
 
     private val locationsDemo2 = listOf(
         SuperHeroLocations(id = "AB3A873C-37B4-4FDE-A50F-8014D40D94FE",36.8415268,-2.4746262),
@@ -47,7 +47,8 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Tag", "This LocationsFragment hero is: ${hero.name}")
+//        Log.d("Tag", "This LocationsFragment hero is: ${hero.name}")
+        Log.w("Tag", "LocationsFragment > onViewCreated > heroLocations: ${hero.name}: $heroLocations")
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -102,14 +103,14 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 
         if (hasPermission) {
             heroLocations = loadLocations()
-            Log.w("Tag","onAttach heroLocations: $heroLocations") // prints...
+            Log.d("Tag","onAttach heroLocations: $heroLocations") // prints...
         } else {
             val permissionLauncher =
                 registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                     if (isGranted) {
                         // todo: getLocation
                         heroLocations = loadLocations()
-                        Log.w("Tag","onAttach heroLocations: $heroLocations") // prints...
+                        Log.d("Tag","onAttach heroLocations: $heroLocations") // prints...
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -134,11 +135,11 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 
         // todo map function
 
-        locationsDemo2.forEach { // works
-            map.addMarker(MarkerOptions().position(LatLng(it.latitude!!, it.longitude!!)))
-        }
+//        locationsDemo2.forEach { // works
+//            map.addMarker(MarkerOptions().position(LatLng(it.latitude!!, it.longitude!!)))
+//        }
 
-        Log.w("Tag","onMapReady heroLocations: $heroLocations") // prints []
+        Log.d("Tag","onMapReady heroLocations: $heroLocations") // prints []
         heroLocations.forEach {
             map.addMarker(MarkerOptions().position(LatLng(it.latitude!!, it.longitude!!)))
         }
@@ -175,7 +176,7 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 //                viewModel.getLocationsX(token, hero.id)
                 heroes = viewModel.getLocationsX(token, hero.id) // lateinit property locationsLiving has not been initialized
 //                viewModel.getLocations5(token, id) // TODO: Debug this Retrofit version and use instead of getLocationX
-                Log.w("Tag", "heroLocations (new output): $heroLocations")
+                Log.d("Tag", "heroLocations (new output): $heroLocations")
             }
         }
         return heroes

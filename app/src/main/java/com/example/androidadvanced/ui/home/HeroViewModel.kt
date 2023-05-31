@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidadvanced.data.Repository
 import com.example.androidadvanced.ui.model.SuperHero
+import com.example.androidadvanced.ui.model.SuperHeroLocations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,9 +65,9 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
         hero.favorite = true
     }
 
-    fun goToMapPage(hero: SuperHero) {
+    fun goToMapPage(hero: SuperHero, locations: List<SuperHeroLocations>) {
         Log.d("Tag", "goToMapPage ${hero.name}")
-        _detailState.value = DetailState.OnMapSelected(hero)
+        _detailState.value = DetailState.OnMapSelected(hero, locations)
     }
 
     sealed class HeroListState {
@@ -78,7 +79,7 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
         object Idle: HeroListState()
     }
     sealed class DetailState {
-        data class OnMapSelected(val hero: SuperHero): DetailState()
+        data class OnMapSelected(val hero: SuperHero, val locations: List<SuperHeroLocations>): DetailState()
         object Idle: DetailState()
     }
     sealed class HeroState {

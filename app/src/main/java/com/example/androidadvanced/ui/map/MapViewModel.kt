@@ -47,7 +47,7 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
 
     fun getLocationsX(token: String, id: String) : List<SuperHeroLocations> {
 //    fun getLocationsX(token: String, id: String) {
-        Log.d("Tag", "getLocationsX...")
+//        Log.d("Tag", "getLocationsX...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/"
@@ -74,7 +74,7 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
                         val locationsFight = getLocationsResponseArray.toList().map { SuperHeroLocations(it.id, it.latitud, it.longitud) }
                         Log.d("Tag", "locationsFight (post-mapping) = $locationsFight")
                         locationsLiving = locationsFight // initialize living heroes with api data
-                        Log.w("Tag", "locationsLiving = $locationsLiving")
+                        Log.d("Tag", "locationsLiving = $locationsLiving")
                         _mapState.value = MapState.OnHeroLocationReceived(locationsFight)
                     } catch (ex: Exception) {
                         _mapState.value= MapState.ErrorJSON("Something went wrong in the fetchHeroes response")

@@ -36,7 +36,7 @@ class HeroListFragment @Inject constructor(private val viewModel: HeroViewModel)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.w("Tag","Change log: ____")
+        Log.d("Tag","Change log: Moved loadLocations to DetailsFragment")
         configureAdapter()
         configureObservers()
         configureListeners()
