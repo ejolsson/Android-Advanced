@@ -40,8 +40,8 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.bLogin)
 
         loginButton.setOnClickListener {
-//            viewModel.userLogin4("${email.text}","${password.text}")
-            viewModel.skipLogin()
+            viewModel.userLogin4("${email.text}","${password.text}")
+//            viewModel.skipLogin()
         }
     }
     private fun setObservers() {
