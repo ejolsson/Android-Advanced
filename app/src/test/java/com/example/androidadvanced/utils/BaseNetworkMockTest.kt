@@ -19,8 +19,8 @@ open class BaseNetworkMockTest {
 
     @Before
     fun setup() {
-        mockWebServer = MockWebServer()
-        mockWebServer.dispatcher = DragonBallApiMockDispatcher()
+        mockWebServer = MockWebServer() // library
+        mockWebServer.dispatcher = DragonBallApiMockDispatcher() // class file
         mockWebServer.start()
 
         api = Retrofit.Builder()

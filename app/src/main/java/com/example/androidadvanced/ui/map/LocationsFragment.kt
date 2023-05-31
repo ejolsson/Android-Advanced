@@ -88,7 +88,7 @@ class LocationsFragment (private var hero: SuperHero, private var heroLocations:
             requireContext(),
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
-    }
+    } // only needed to use user location
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -174,9 +174,8 @@ class LocationsFragment (private var hero: SuperHero, private var heroLocations:
             Log.d("Tag", "loadLocations...")
             User.getToken(requireContext())?.let { token ->
 //                viewModel.getLocationsX(token, hero.id)
-                heroes = viewModel.getLocationsX(token, hero.id) // lateinit property locationsLiving has not been initialized
-//                viewModel.getLocations5(token, id) // TODO: Debug this Retrofit version and use instead of getLocationX
-                Log.d("Tag", "heroLocations (new output): $heroLocations")
+                heroes = viewModel.getLocationsX(token, hero.id) // MUST have this to work!
+                viewModel.getLocations5(token, hero.id) // TODO: Debug this Retrofit version and use instead of getLocationX
             }
         }
         return heroes

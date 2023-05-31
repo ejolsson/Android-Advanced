@@ -1,5 +1,6 @@
 package com.example.androidadvanced.data.remote
 
+import android.util.Log
 import com.example.androidadvanced.data.data.RemoteDataSourceImpl
 import com.example.androidadvanced.utils.BaseNetworkMockTest
 import com.example.androidadvanced.data.data.request.GetHeroesRequestBody
@@ -9,7 +10,7 @@ import org.junit.Test
 class RemoteDataSourceTest : BaseNetworkMockTest() {
 
     // UUT o SUT Unit Under Test o System Under Test
-    val token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
+    private val token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
     @Test // unit test
     fun nameTest() = runTest {
 
@@ -27,6 +28,7 @@ class RemoteDataSourceTest : BaseNetworkMockTest() {
 
         // When
         val actual = remoteDataSource.getHeroes2(token)
+        Log.d("Tag", "actual: ${actual[0].name}")
 
         // Then
         assert(actual[0].name == "Broly")
@@ -39,7 +41,7 @@ class RemoteDataSourceTest : BaseNetworkMockTest() {
         val remoteDataSource = RemoteDataSourceImpl(api)
 
         // When
-        val actual = remoteDataSource.getHeroes2t(token)
+        val actual = remoteDataSource.getHeroes3(token) // was 2t
 
         // Then
         assert(actual.size == 3)

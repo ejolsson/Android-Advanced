@@ -13,7 +13,7 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallApi): 
         return api.getHeroes1(tokenBear, GetHeroesRequestBody())
     }
 
-    suspend fun getHeroes2t(token: String): List<GetHeroesResponse> { // used for testing
+    suspend fun getHeroes3(token: String): List<GetHeroesResponse> { // used for testing // was 2t
         val result = api.getHeroes1(token, GetHeroesRequestBody())
         return result.filter { it.name.startsWith("B") }
     }

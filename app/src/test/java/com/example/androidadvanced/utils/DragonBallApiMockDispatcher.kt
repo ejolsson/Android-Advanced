@@ -14,8 +14,8 @@ class DragonBallApiMockDispatcher : Dispatcher() {
             "/api/heros/all" -> {
                 MockResponse()
                     .setResponseCode(HttpURLConnection.HTTP_OK)
-//                    .setBody(getJson("json/heros.json"))
-                    .setBody(getJson("/Users/ericolsson/AndroidStudioProjects/AndroidAdvanced/app/src/main/resources/json/heros.json"))
+                    .setBody(getJson("json/heros.json"))
+//                    .setBody(getJson("/Users/ericolsson/AndroidStudioProjects/AndroidAdvanced/app/src/main/resources/json/heros.json"))
             }
             else -> MockResponse().throttleBody(1024, 5, TimeUnit.SECONDS)
         }

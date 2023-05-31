@@ -35,7 +35,7 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
     fun getHeroes5(token: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
-                Log.d("Tag", "getHeroes5 token = $token")
+//                Log.d("Tag", "getHeroes5 token = $token")
                 repository.getHeroes4(token)
             }
             _heroes.value = result
