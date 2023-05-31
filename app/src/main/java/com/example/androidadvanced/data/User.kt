@@ -13,7 +13,7 @@ class User {
                 putString(TAG_USER_TOKEN, newToken)
                 apply()
             }
-            Log.w("Tag token", "Token saved into SharedPreferences: $newToken")
+            Log.d("Tag token", "Token saved into SharedPreferences: $newToken")
         }
 
         fun getToken(context: Context) =

@@ -1,8 +1,8 @@
-package com.example.androidadvanced.data.remote
+package com.example.androidadvanced.data.data
 
 import android.util.Log
-import com.example.androidadvanced.data.remote.request.GetHeroesRequestBody
-import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import com.example.androidadvanced.data.data.request.GetHeroesRequestBody
+import com.example.androidadvanced.data.data.response.GetHeroesResponse
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallApi): RemoteDataSource {
@@ -13,7 +13,7 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallApi): 
         return api.getHeroes1(tokenBear, GetHeroesRequestBody())
     }
 
-    suspend fun getHeroes3(token: String): List<GetHeroesResponse> {
+    suspend fun getHeroes2t(token: String): List<GetHeroesResponse> { // used for testing
         val result = api.getHeroes1(token, GetHeroesRequestBody())
         return result.filter { it.name.startsWith("B") }
     }

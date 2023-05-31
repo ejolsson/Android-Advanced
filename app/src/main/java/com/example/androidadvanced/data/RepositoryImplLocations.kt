@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.androidadvanced.data.local.LocalDataSourceLocations
 import com.example.androidadvanced.data.mappers.LocalToPresentationMapperLocations
 import com.example.androidadvanced.data.mappers.RemoteToLocalMapperLocations
-import com.example.androidadvanced.data.remote.RemoteDataSourceLocations
+import com.example.androidadvanced.data.data.RemoteDataSourceLocations
 import com.example.androidadvanced.ui.model.SuperHeroLocations
 import javax.inject.Inject
 

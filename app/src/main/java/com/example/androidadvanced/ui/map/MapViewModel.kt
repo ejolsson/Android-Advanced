@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidadvanced.data.RepositoryLocations
-import com.example.androidadvanced.data.remote.response.GetLocationsResponse
+import com.example.androidadvanced.data.data.response.GetLocationsResponse
 import com.example.androidadvanced.ui.model.SuperHeroLocations
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,8 +28,8 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
 
     private val _locations = MutableLiveData<List<SuperHeroLocations>>() // was GetLocationsResponse
 
-    lateinit var locationsLiving: List<SuperHeroLocations> // new/local data type, to receive data mapping
-    var locationsToShow: SuperHeroLocations? = null // new/local data type, to receive data mapping
+    private var locationsLiving = listOf<SuperHeroLocations>() // new/local data type, to receive data mapping
+    var locationToShow: SuperHeroLocations? = null // new/local data type, to receive data mapping
 
     fun getLocations5(token: String, id:String) {
         viewModelScope.launch {
@@ -45,24 +45,23 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
         }
     }
 
-    val idHard = "14BB8E98-6586-4EA7-B4D7-35D6A63F5AA3"
-//    fun getLocationsX(token: String, id: String) : List<SuperHeroLocations> {
-    fun getLocationsX(token: String, id: String) {
-        Log.w("Tag", "getLocationsX...")
+    fun getLocationsX(token: String, id: String) : List<SuperHeroLocations> {
+//    fun getLocationsX(token: String, id: String) {
+        Log.d("Tag", "getLocationsX...")
         viewModelScope.launch(Dispatchers.IO) {
             val client = OkHttpClient()
             val baseUrl = "https://dragonball.keepcoding.education/api/"
             val url = "${baseUrl}/heros/locations"
             val body = FormBody.Builder()
-                .add("id", idHard) // hardcode
+                .add("id", id) // hardcode
                 .build()
-            Log.w("Tag","tokenPublic used for fetchHeroes = $token")
+//            Log.d("Tag","tokenPublic used for fetchHeroes = $token")
             val request = Request.Builder()
                 .url(url)
                 .addHeader("Authorization","Bearer $token")
                 .post(body)
                 .build()
-            Log.w("Tag", "request = $request")
+//            Log.d("Tag", "request = $request")
             val call = client.newCall(request)
             val response = call.execute()
             if (response.isSuccessful) {
@@ -71,9 +70,9 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
                     try {
                         val response = responseBody.string()
                         val getLocationsResponseArray = gson.fromJson(response, Array<GetLocationsResponse>::class.java)
-                        Log.w("Tag", "getLocationsResponseArray.asList = ${getLocationsResponseArray.asList()}")
+                        Log.d("Tag", "getLocationsResponseArray.asList (pre-mapping) = ${getLocationsResponseArray.asList()}")
                         val locationsFight = getLocationsResponseArray.toList().map { SuperHeroLocations(it.id, it.latitud, it.longitud) }
-                        Log.w("Tag", "locations = $locationsFight")
+                        Log.d("Tag", "locationsFight (post-mapping) = $locationsFight")
                         locationsLiving = locationsFight // initialize living heroes with api data
                         Log.w("Tag", "locationsLiving = $locationsLiving")
                         _mapState.value = MapState.OnHeroLocationReceived(locationsFight)
@@ -87,7 +86,7 @@ class MapViewModel @Inject constructor(private val repositoryLocations: Reposito
             }
 
         }
-//        return locationsLiving
+        return locationsLiving
     }
 
     sealed class MapState {

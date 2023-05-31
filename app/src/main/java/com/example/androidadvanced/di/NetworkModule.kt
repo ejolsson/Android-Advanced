@@ -1,7 +1,7 @@
 package com.example.androidadvanced.di
 
-import com.example.androidadvanced.data.remote.DragonBallApi
-import com.example.androidadvanced.data.remote.MapApi
+import com.example.androidadvanced.data.data.DragonBallApi
+import com.example.androidadvanced.data.data.MapApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

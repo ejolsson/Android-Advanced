@@ -1,6 +1,6 @@
 package com.example.androidadvanced.data
 
-import com.example.androidadvanced.data.remote.LoginRemoteDataSource
+import com.example.androidadvanced.data.data.LoginRemoteDataSource
 
 class LoginRepository {
 

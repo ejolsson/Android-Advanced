@@ -1,9 +1,9 @@
-package com.example.androidadvanced.data.remote
+package com.example.androidadvanced.data.data
 
-import com.example.androidadvanced.data.remote.request.GetHeroesRequestBody
-import com.example.androidadvanced.data.remote.request.GetLocationsRequestBody
-import com.example.androidadvanced.data.remote.response.GetHeroesResponse
-import com.example.androidadvanced.data.remote.response.GetLocationsResponse
+import com.example.androidadvanced.data.data.request.GetHeroesRequestBody
+import com.example.androidadvanced.data.data.request.GetLocationsRequestBody
+import com.example.androidadvanced.data.data.response.GetHeroesResponse
+import com.example.androidadvanced.data.data.response.GetLocationsResponse
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST

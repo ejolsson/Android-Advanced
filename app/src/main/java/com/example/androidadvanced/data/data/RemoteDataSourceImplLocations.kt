@@ -1,8 +1,8 @@
-package com.example.androidadvanced.data.remote
+package com.example.androidadvanced.data.data
 
 import android.util.Log
-import com.example.androidadvanced.data.remote.request.GetLocationsRequestBody
-import com.example.androidadvanced.data.remote.response.GetLocationsResponse
+import com.example.androidadvanced.data.data.request.GetLocationsRequestBody
+import com.example.androidadvanced.data.data.response.GetLocationsResponse
 import javax.inject.Inject
 
 class RemoteDataSourceImplLocations @Inject constructor(private val api: MapApi):

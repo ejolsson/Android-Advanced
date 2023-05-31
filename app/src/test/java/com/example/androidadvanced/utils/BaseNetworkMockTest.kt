@@ -1,6 +1,6 @@
 package com.example.androidadvanced.utils
 
-import com.example.androidadvanced.data.remote.DragonBallApi
+import com.example.androidadvanced.data.data.DragonBallApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.mockwebserver.MockWebServer

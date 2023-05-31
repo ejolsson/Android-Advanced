@@ -1,7 +1,7 @@
 package com.example.androidadvanced.data.mappers
 
 import com.example.androidadvanced.data.local.model.LocalSuperHero
-import com.example.androidadvanced.data.remote.response.GetHeroesResponse
+import com.example.androidadvanced.data.data.response.GetHeroesResponse
 import javax.inject.Inject
 
 class RemoteToLocalMapper @Inject constructor() {

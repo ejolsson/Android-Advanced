@@ -1,4 +1,4 @@
-package com.example.androidadvanced.data.remote
+package com.example.androidadvanced.data.data
 
 import retrofit2.http.Header
 import retrofit2.http.POST

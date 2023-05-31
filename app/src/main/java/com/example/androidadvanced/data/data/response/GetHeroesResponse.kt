@@ -1,4 +1,4 @@
-package com.example.androidadvanced.data.remote.response
+package com.example.androidadvanced.data.data.response
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

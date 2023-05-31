@@ -4,8 +4,8 @@ import com.example.androidadvanced.data.Repository
 import com.example.androidadvanced.data.RepositoryImpl
 import com.example.androidadvanced.data.local.LocalDataSource
 import com.example.androidadvanced.data.local.LocalDataSourceImpl
-import com.example.androidadvanced.data.remote.RemoteDataSource
-import com.example.androidadvanced.data.remote.RemoteDataSourceImpl
+import com.example.androidadvanced.data.data.RemoteDataSource
+import com.example.androidadvanced.data.data.RemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

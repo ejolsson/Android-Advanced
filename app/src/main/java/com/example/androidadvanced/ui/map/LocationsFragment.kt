@@ -4,12 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -21,29 +18,22 @@ import androidx.navigation.fragment.navArgs
 import com.example.androidadvanced.R
 import com.example.androidadvanced.data.User
 import com.example.androidadvanced.databinding.MapBinding
-import com.example.androidadvanced.ui.details.DetailsFragment
-import com.example.androidadvanced.ui.home.HeroActivity
-import com.example.androidadvanced.ui.home.HeroViewModel
 import com.example.androidadvanced.ui.model.SuperHero
 import com.example.androidadvanced.ui.model.SuperHeroLocations
 import com.example.androidadvanced.utils.viewBinding
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.launch
 //import java.security.AccessController.checkPermission // suspect causing an error with "checkPermission()"
-import javax.inject.Inject
 
 class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), OnMapReadyCallback {
 // todo @Inject constructor(private val hero: SuperHero, private val heroLocations: List<SuperHeroLocations>)
     private val binding: MapBinding by viewBinding(MapBinding::bind) // viewBinding imported fm Fragment ViewBindingDelegate.kt
+//    private lateinit var binding: MapBinding
     private val viewModel: MapViewModel by activityViewModels() // was HeroViewModel
 //    private val args: LocationsFragmentArgs by navArgs() // L5.. use DetailFragmentArgs?
     private var heroLocations = listOf<SuperHeroLocations>()
@@ -57,7 +47,7 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.w("Tag", "This LocationsFragment hero is: ${hero.name}")
+        Log.d("Tag", "This LocationsFragment hero is: ${hero.name}")
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -65,30 +55,29 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
 //        binding.tvHeroNameMap.text = args.superheroId // todo update
 //        binding.tvHeroNameMap = "hi"
 
-        binding.bShowLocations.setOnClickListener {
-            Log.w("Tag", "binding.bShowLocations.setOnClickListener...")
-//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.0, -3.6), 20.0F))
-
-            loadLocations()
-
-            if (checkPermission()) {
-                showLocation()
-            }
-        }
+//        binding.bShowLocations.setOnClickListener {
+////            Log.d("Tag", "binding.bShowLocations.setOnClickListener...")
+////            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(40.0, -3.6), 20.0F))
+////            loadLocations() // this this function on L115
+//
+//            if (checkPermission()) {
+//                panToLocation()
+//            }
+//        }
     }
 
     @SuppressLint("MissingPermission")
-    fun showLocation() {
+    fun panToLocation() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         fusedLocationClient.lastLocation.addOnCompleteListener{
             if (it.isSuccessful){
                 val location = it.result
                 val marker = MarkerOptions().position(LatLng(location.latitude, location.longitude))
-//                fFragment.addMarker(marker)
+                map.addMarker(marker)
             }
         }
-    }
+    } // this pans map to given point, NO REAL USE FOR IT
 
     private fun checkPermission(): Boolean {
         return ActivityCompat.checkSelfPermission(
@@ -112,12 +101,15 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasPermission) {
-//            loadLocations()
+            heroLocations = loadLocations()
+            Log.w("Tag","onAttach heroLocations: $heroLocations") // prints...
         } else {
             val permissionLauncher =
                 registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                     if (isGranted) {
                         // todo: getLocation
+                        heroLocations = loadLocations()
+                        Log.w("Tag","onAttach heroLocations: $heroLocations") // prints...
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -126,10 +118,9 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
                         ).show()
                     }
                 }
-
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-    }
+    } // this fun is auto called w/in itself
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
@@ -147,6 +138,7 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
             map.addMarker(MarkerOptions().position(LatLng(it.latitude!!, it.longitude!!)))
         }
 
+        Log.w("Tag","onMapReady heroLocations: $heroLocations") // prints []
         heroLocations.forEach {
             map.addMarker(MarkerOptions().position(LatLng(it.latitude!!, it.longitude!!)))
         }
@@ -174,16 +166,19 @@ class LocationsFragment (private var hero: SuperHero): Fragment(R.layout.map), O
         }
     }
 
-    private fun loadLocations() {
+    private fun loadLocations(): List<SuperHeroLocations> {
         // todo: use _heroState to nav to locationsFragment
+        var heroes = listOf<SuperHeroLocations>()
         activity?.getPreferences(Context.MODE_PRIVATE)?.let {
-            Log.w("Tag", "loadLocations...")
+            Log.d("Tag", "loadLocations...")
             User.getToken(requireContext())?.let { token ->
-                viewModel.getLocationsX(token, hero.id)
-//                heroLocations = viewModel.getLocationsX(token, hero.id) // lateinit property locationsLiving has not been initialized
-//                viewModel.getLocations5(token, id)
+//                viewModel.getLocationsX(token, hero.id)
+                heroes = viewModel.getLocationsX(token, hero.id) // lateinit property locationsLiving has not been initialized
+//                viewModel.getLocations5(token, id) // TODO: Debug this Retrofit version and use instead of getLocationX
+                Log.w("Tag", "heroLocations (new output): $heroLocations")
             }
         }
+        return heroes
     }
 }
 
