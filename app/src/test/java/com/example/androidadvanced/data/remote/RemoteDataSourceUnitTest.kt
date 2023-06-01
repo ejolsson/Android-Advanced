@@ -7,7 +7,7 @@ import com.example.androidadvanced.data.data.request.GetHeroesRequestBody
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class RemoteDataSourceTest : BaseNetworkMockTest() {
+class RemoteDataSourceUnitTest : BaseNetworkMockTest() {
 
     // UUT o SUT Unit Under Test o System Under Test
     private val token = "eyJhbGciOiJIUzI1NiIsImtpZCI6InByaXZhdGUiLCJ0eXAiOiJKV1QifQ.eyJpZGVudGlmeSI6IjdDNzQ1NjRCLTQ5NUEtNDhCRC04QzIyLTM5OEUwOUREODY0MyIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6Imp1YW5qZS5jaWxsYTFAZ21haWwuY29tIn0.epMHxtAkVu_fT5FvQwKrm_fRqzT9UOG2gpiTTipQajw"
@@ -45,6 +45,6 @@ class RemoteDataSourceTest : BaseNetworkMockTest() {
 
         // Then
         assert(actual.size == 3)
-    } // pass
+    } // pass, pass again on 5/31 14:55:36
 
 }

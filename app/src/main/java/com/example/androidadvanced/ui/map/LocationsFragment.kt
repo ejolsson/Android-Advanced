@@ -175,7 +175,7 @@ class LocationsFragment (private var hero: SuperHero, private var heroLocations:
             User.getToken(requireContext())?.let { token ->
 //                viewModel.getLocationsX(token, hero.id)
                 heroes = viewModel.getLocationsX(token, hero.id) // MUST have this to work!
-                viewModel.getLocations5(token, hero.id) // TODO: Debug this Retrofit version and use instead of getLocationX
+//                viewModel.getLocations5(token, hero.id) // TODO: Debug this Retrofit version and use instead of getLocationX
             }
         }
         return heroes
