@@ -5,6 +5,8 @@ import com.example.androidadvanced.data.local.LocalDataSource
 import com.example.androidadvanced.data.mappers.LocalToPresentationMapper
 import com.example.androidadvanced.data.mappers.RemoteToLocalMapper
 import com.example.androidadvanced.data.data.RemoteDataSource
+import com.example.androidadvanced.data.local.model.LocalSuperHero
+import com.example.androidadvanced.data.mappers.PresentationToLocalMapper
 import com.example.androidadvanced.ui.model.SuperHero
 import javax.inject.Inject
 
@@ -12,7 +14,8 @@ class RepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
     private val localToPresentationMapper: LocalToPresentationMapper,
-    private val remoteToLocalMapper: RemoteToLocalMapper
+    private val remoteToLocalMapper: RemoteToLocalMapper,
+    private val presentationToLocalMapper: PresentationToLocalMapper
 ): Repository {
 
     override suspend fun getHeroes4(token: String): List<SuperHero> {
@@ -24,6 +27,11 @@ class RepositoryImpl @Inject constructor(
             localDataSource.insertHeroes(remoteToLocalMapper.mapGetHeroResponse(remoteSuperHeroes))
         }
         return localToPresentationMapper.mapLocalSuperHeroes(localDataSource.getHeroes3())
+    }
+
+    override suspend fun saveFavorite(hero: SuperHero): LocalSuperHero {
+        Log.w("Tag", "${hero.name} fav status before: ${hero.favorite}")
+        return presentationToLocalMapper.mapSuperHeroFavorite(hero)
     }
 
     override suspend fun deleteHeroes4() {

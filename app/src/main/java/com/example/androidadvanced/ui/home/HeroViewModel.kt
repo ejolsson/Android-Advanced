@@ -63,6 +63,11 @@ class HeroViewModel @Inject constructor(private val repository: Repository): Vie
     fun makeHeroFavorite(hero: SuperHero) {
         Log.d("Tag DetailsFrag", "${hero.name} favorite status before: ${hero.favorite}")
         hero.favorite = true
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                repository.saveFavorite(hero)
+            }
+        }
     }
 
     fun goToMapPage(hero: SuperHero, locations: List<SuperHeroLocations>) {

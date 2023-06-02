@@ -52,6 +52,9 @@ class DetailsFragment @Inject constructor(private val viewModel: HeroViewModel, 
 
         binding.bMakeFavorite.setOnClickListener {
             viewModel.makeHeroFavorite(hero)
+            if (hero.favorite) {
+                binding.cbHeroDetail.alpha = 1.0F
+            }
         }
 
         binding.bShowLocations.setOnClickListener {
