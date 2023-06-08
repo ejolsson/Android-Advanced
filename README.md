@@ -6,3 +6,7 @@ The application presents a Dragon Ballz battle simulator using API data and logi
 * The main screen presents a list of heroes for the user to choose from.
 * The user can mark heroes as favorites.
 * Hero locations will be display on a map.
+
+NOTE: To use Google Maps function, you will need to supply a valid api key by either:
+1. Add GOOGLE_MAPS_API_KEY = yourkey... to local.properties file or
+2. Paste your api key value inside AndroidManifest.xml, line 37, android:value="${GOOGLE_MAPS_API_KEY}"  
