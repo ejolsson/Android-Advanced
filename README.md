@@ -13,6 +13,6 @@ NOTE: To use Google Maps function, you will need to supply a valid api key by ei
 
 ## Screenshots
 
-| Hero List                                                              | Hero Detail 1                                                              | Map Page                                                           |
-|------------------------------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------|
+| Hero List                                                              | Hero Detail                                                              | Map Page                                                           |
+|------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------|
 | <img src="./promo/HeroListScreenshot.png" width="300" alt="Hero List"> | <img src="./promo/HeroDetailScreenshot.png" width="300" alt="Hero Detail"> | <img src="./promo/MapScreenshot.png" width="300" alt="Map Page"> |
