@@ -10,3 +10,9 @@ The application presents a Dragon Ballz battle simulator using API data and logi
 NOTE: To use Google Maps function, you will need to supply a valid api key by either:
 1. Add GOOGLE_MAPS_API_KEY = yourkey... to local.properties file or
 2. Paste your api key value inside AndroidManifest.xml, line 37, android:value="${GOOGLE_MAPS_API_KEY}"  
+
+## Screenshots
+
+| Hero List                                                              | Hero Detail 1                                                              | Map Page                                                           |
+|------------------------------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------|
+| <img src="./promo/HeroListScreenshot.png" width="300" alt="Hero List"> | <img src="./promo/HeroDetailScreenshot.png" width="300" alt="Hero Detail"> | <img src="./promo/MapScreenshot.png" width="300" alt="Map Page"> |
